@@ -23,7 +23,7 @@ const ventures = [
 
 export const Ventures = () => {
     return (
-        <section id="ventures" className="py-24 px-6 bg-white/[0.01]">
+        <section id="ventures" className="py-32 px-6 relative overflow-hidden bg-white/[0.01]">
             <div className="container max-w-6xl mx-auto">
                 <SectionHeader
                     label="Ventures"
@@ -31,34 +31,38 @@ export const Ventures = () => {
                     subtitle="Forging paths in technology and creative excellence through founded entities."
                 />
 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-10 mt-16">
                     {ventures.map((venture, i) => (
                         <motion.div
                             key={i}
-                            initial={{ opacity: 0, scale: 0.95 }}
-                            whileInView={{ opacity: 1, scale: 1 }}
+                            initial={{ opacity: 0, scale: 0.98, y: 30 }}
+                            whileInView={{ opacity: 1, scale: 1, y: 0 }}
                             viewport={{ once: true }}
-                            transition={{ delay: i * 0.1 }}
-                            className="group p-10 glass-morphism border-accent/10 hover:border-accent/30 transition-all space-y-6 flex flex-col justify-between"
+                            transition={{ delay: i * 0.2, duration: 0.8 }}
+                            className="group p-12 glass-morphism rounded-3xl border-white/[0.03] hover:border-accent/30 hover:bg-accent/[0.02] transition-all duration-700 space-y-8 flex flex-col justify-between"
                         >
-                            <div className="space-y-6">
+                            <div className="space-y-8">
                                 <div className="flex justify-between items-start">
-                                    <span className="text-[10px] uppercase tracking-[3px] text-accent font-semibold">
-                                        {venture.label}
-                                    </span>
-                                    <a href={venture.href} target="_blank" className="text-accent/40 group-hover:text-accent transition-colors">
+                                    <div className="space-y-1">
+                                        <span className="text-[10px] uppercase tracking-[5px] text-accent/60 font-bold group-hover:text-accent transition-colors">
+                                            {venture.label}
+                                        </span>
+                                        <h3 className="text-4xl font-serif group-hover:text-accent transition-colors duration-500 tracking-tight">
+                                            {venture.title}
+                                        </h3>
+                                    </div>
+                                    <a href={venture.href} target="_blank" className="p-3 bg-white/[0.03] border border-white/[0.05] rounded-full text-accent/40 group-hover:text-accent group-hover:rotate-45 transition-all duration-500">
                                         <ArrowUpRight size={24} />
                                     </a>
                                 </div>
-                                <h3 className="text-3xl font-serif group-hover:text-accent transition-colors tracking-tight">
-                                    {venture.title}
-                                </h3>
-                                <p className="text-foreground/60 font-light leading-relaxed">
+
+                                <p className="text-xl font-light leading-relaxed text-foreground/60">
                                     {venture.desc}
                                 </p>
-                                <div className="flex flex-wrap gap-2">
+
+                                <div className="flex flex-wrap gap-3">
                                     {venture.tags.map(tag => (
-                                        <span key={tag} className="text-[10px] uppercase tracking-[1px] px-3 py-1 bg-white/5 border border-white/10 rounded-full text-foreground/40">
+                                        <span key={tag} className="text-[9px] uppercase tracking-[2px] px-4 py-2 bg-white/[0.03] border border-white/[0.05] rounded-full text-foreground/40 group-hover:border-accent/10 transition-all duration-500">
                                             {tag}
                                         </span>
                                     ))}
@@ -68,11 +72,10 @@ export const Ventures = () => {
                             <motion.a
                                 href={venture.href}
                                 target="_blank"
-                                whileHover={{ x: 5 }}
-                                className="inline-flex items-center gap-2 text-xs uppercase tracking-[3px] font-bold text-accent pt-6"
+                                className="inline-flex items-center gap-4 text-[11px] uppercase tracking-[4px] font-bold text-accent/60 group-hover:text-accent pt-10 group-hover:translate-x-4 transition-all duration-700"
                             >
                                 Visit Venture
-                                <span className="h-px w-8 bg-accent/30 group-hover:w-16 transition-all duration-500" />
+                                <span className="h-[1px] w-12 bg-accent/30 group-hover:w-24 transition-all duration-700" />
                             </motion.a>
                         </motion.div>
                     ))}

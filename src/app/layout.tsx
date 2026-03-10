@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { GlowEffect } from "@/components/GlowEffect";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -18,7 +19,8 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className="scroll-smooth">
-      <body className="grain antialiased">
+      <body className="grain antialiased bg-background">
+        <GlowEffect />
         {children}
       </body>
     </html>

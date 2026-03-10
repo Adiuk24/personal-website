@@ -3,21 +3,23 @@
 @import "tailwindcss";
 
 @theme {
-  --color-background: #050505;
-  --color-foreground: #F8F5F0;
-  --color-accent: #C8A97E;
-  --color-accent-soft: rgba(200, 169, 126, 0.1);
-  --color-glass: rgba(20, 20, 20, 0.7);
-  --color-glass-border: rgba(255, 255, 255, 0.08);
+  --color-background: #030303;
+  --color-foreground: #FDFCFB;
+  --color-accent: #D4AF37;
+  --color-accent-soft: rgba(212, 175, 55, 0.08);
+  --color-glass: rgba(10, 10, 10, 0.6);
+  --color-glass-border: rgba(255, 255, 255, 0.05);
+  --color-surface: #0A0A0A;
 }
 
 :root {
-  --background: #050505;
-  --foreground: #F8F5F0;
-  --accent: #C8A97E;
-  --accent-soft: rgba(200, 169, 126, 0.1);
-  --glass: rgba(20, 20, 20, 0.7);
-  --glass-border: rgba(255, 255, 255, 0.08);
+  --background: #030303;
+  --foreground: #FDFCFB;
+  --accent: #D4AF37;
+  --accent-soft: rgba(212, 175, 55, 0.08);
+  --glass: rgba(10, 10, 10, 0.6);
+  --glass-border: rgba(255, 255, 255, 0.05);
+  --surface: #0A0A0A;
 }
 
 * {
@@ -49,7 +51,7 @@ h4,
 
 /* Custom Scrollbar */
 ::-webkit-scrollbar {
-  width: 5px;
+  width: 4px;
 }
 
 ::-webkit-scrollbar-track {
@@ -57,7 +59,7 @@ h4,
 }
 
 ::-webkit-scrollbar-thumb {
-  background: var(--glass-border);
+  background: rgba(255, 255, 255, 0.1);
   border-radius: 10px;
 }
 
@@ -74,49 +76,24 @@ h4,
   width: 100%;
   height: 100%;
   pointer-events: none;
-  opacity: 0.04;
+  opacity: 0.15;
   z-index: 9999;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='256' height='256' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
-  animation: grain 8s steps(10) infinite;
-}
-
-@keyframes grain {
-
-  0%,
-  100% {
-    transform: translate(0, 0);
-  }
-
-  10% {
-    transform: translate(-5%, -10%);
-  }
-
-  30% {
-    transform: translate(3%, -15%);
-  }
-
-  50% {
-    transform: translate(-10%, 5%);
-  }
-
-  70% {
-    transform: translate(8%, 10%);
-  }
-
-  90% {
-    transform: translate(-3%, 8%);
-  }
+  mix-blend-mode: overlay;
+  background-image: url("https://grainy-gradients.vercel.app/noise.svg");
+  filter: contrast(150%) brightness(100%);
 }
 
 .glass-morphism {
   background: var(--glass);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
   border: 1px solid var(--glass-border);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.8);
 }
 
 .text-gradient {
   background: linear-gradient(135deg, #F8F5F0 0%, #C8A97E 100%);
   -webkit-background-clip: text;
+  background-clip: text;
   -webkit-text-fill-color: transparent;
 }

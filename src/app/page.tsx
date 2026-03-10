@@ -6,6 +6,7 @@ import { Ventures } from "@/components/sections/Ventures";
 import { Research } from "@/components/sections/Research";
 import { Press } from "@/components/sections/Press";
 import { Contact } from "@/components/sections/Contact";
+import { Footer } from "@/components/Footer";
 
 export default function Home() {
   return (
@@ -18,12 +19,7 @@ export default function Home() {
       <Research />
       <Press />
       <Contact />
-
-      <footer className="py-12 border-t border-white/5 text-center">
-        <p className="text-[10px] uppercase tracking-[3px] text-foreground/20 font-medium">
-          © {new Date().getFullYear()} Arif Ahmed Adito. All Rights Reserved.
-        </p>
-      </footer>
+      <Footer />
     </main>
   );
 }
