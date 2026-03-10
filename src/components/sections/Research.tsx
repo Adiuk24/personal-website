@@ -25,7 +25,7 @@ export const Research = () => {
                     subtitle="Exploring the frontier of artificial intelligence and identity-anchored architectures."
                 />
 
-                <div className="grid grid-cols-1 gap-12 mt-20">
+                <div className="grid grid-cols-1 gap-12 mt-28">
                     {researchItems.map((item, i) => (
                         <motion.div
                             key={i}
@@ -39,7 +39,7 @@ export const Research = () => {
                                 <BookOpen size={40} />
                             </div>
 
-                            <div className="flex-1 space-y-8">
+                            <div className="flex-1 space-y-10">
                                 <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
                                     <h3 className="text-4xl md:text-5xl font-serif tracking-tight group-hover:text-accent transition-colors duration-500">
                                         {item.title}
@@ -61,16 +61,18 @@ export const Research = () => {
                                     ))}
                                 </div>
 
-                                <div className="pt-8 flex flex-col md:flex-row gap-10 items-start md:items-center border-t border-white/5">
+                                <div className="pt-10 flex flex-col lg:flex-row gap-8 items-start lg:items-center border-t border-white/5">
                                     <a
                                         href={item.url}
                                         target="_blank"
-                                        className="flex items-center gap-4 text-accent font-bold text-[11px] uppercase tracking-[4px] group/link hover:translate-x-4 transition-transform duration-700"
+                                        className="group relative inline-flex items-center gap-4 px-8 py-4 bg-white/5 border border-white/10 rounded-xl text-accent font-bold text-[11px] uppercase tracking-[4px] overflow-hidden hover:bg-accent hover:text-background transition-all duration-500"
                                     >
-                                        View Publication
-                                        <span className="w-12 h-[1px] bg-accent/30 group-hover/link:w-20 transition-all duration-700" />
+                                        <span className="relative z-10 flex items-center gap-3">
+                                            View Publication
+                                            <ArrowUpRight size={14} />
+                                        </span>
                                     </a>
-                                    <div className="text-[9px] font-mono text-foreground/20 py-2 px-5 border border-white/5 rounded-full tracking-widest">
+                                    <div className="text-[10px] font-mono text-foreground/20 py-2 px-5 border border-white/5 rounded-full tracking-widest bg-white/[0.01]">
                                         DOI: {item.doi}
                                     </div>
                                 </div>

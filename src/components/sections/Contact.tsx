@@ -72,7 +72,6 @@ export const Contact = () => {
                 <div className="flex items-center justify-center gap-12 mt-32 pt-16 border-t border-white/5">
                     {[
                         { name: "LinkedIn", url: "https://linkedin.com/in/arifadito-025088b4", icon: <Linkedin size={18} /> },
-                        { name: "Twitter", url: "#", icon: <Twitter size={18} /> },
                         { name: "GitHub", url: "https://github.com/Adiuk24", icon: <Github size={18} /> }
                     ].map((item) => (
                         <a

@@ -51,7 +51,7 @@ export const Hero = () => {
                         </span>
                     </motion.div>
 
-                    <h1 className="text-7xl md:text-[10rem] font-serif leading-[0.85] tracking-tighter">
+                    <h1 className="text-6xl md:text-[10rem] font-serif leading-[0.85] tracking-tighter">
                         <motion.span
                             initial={{ opacity: 0, x: -50 }}
                             animate={{ opacity: 1, x: 0 }}
@@ -76,12 +76,12 @@ export const Hero = () => {
                         </motion.span>
                     </h1>
 
-                    <div className="flex flex-col md:flex-row gap-12 items-start justify-between">
+                    <div className="flex flex-col md:flex-row gap-8 md:gap-12 items-start justify-between">
                         <motion.p
                             initial={{ opacity: 0 }}
                             animate={{ opacity: 0.7 }}
                             transition={{ delay: 0.8, duration: 1.5 }}
-                            className="max-w-xl text-xl md:text-2xl font-light leading-relaxed text-foreground/80 tracking-wide"
+                            className="max-w-xl text-lg md:text-2xl font-light leading-relaxed text-foreground/80 tracking-wide"
                         >
                             A high-impact growth leader with <span className="text-accent font-medium">15+ years</span> of experience transitioning
                             ambitious startups into market leaders across <span className="text-foreground font-semibold">SaaS, OTT, and Fintech</span>.
@@ -91,11 +91,11 @@ export const Hero = () => {
                             initial={{ opacity: 0, y: 20 }}
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ delay: 1, duration: 1 }}
-                            className="flex flex-wrap gap-6"
+                            className="flex flex-wrap gap-4 md:gap-6"
                         >
                             <a
                                 href="mailto:adittoarif@gmail.com"
-                                className="group relative px-10 py-5 bg-accent text-background font-bold uppercase tracking-[2px] text-xs overflow-hidden transition-all hover:scale-105 active:scale-95 shadow-2xl shadow-accent/20"
+                                className="group relative px-8 md:px-10 py-4 md:py-5 bg-accent text-background font-bold uppercase tracking-[2px] text-[10px] md:text-xs overflow-hidden transition-all hover:scale-105 active:scale-95 shadow-2xl shadow-accent/20"
                             >
                                 <span className="relative z-10">Get In Touch</span>
                                 <div className="absolute inset-0 bg-white/20 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700" />
@@ -103,7 +103,7 @@ export const Hero = () => {
 
                             <a
                                 href="#experience"
-                                className="px-10 py-5 border border-white/10 glass-morphism hover:border-accent hover:bg-accent/5 transition-all text-foreground/60 hover:text-accent font-bold uppercase tracking-[2px] text-xs"
+                                className="px-8 md:px-10 py-4 md:py-5 border border-white/10 glass-morphism hover:border-accent hover:bg-accent/5 transition-all text-foreground/60 hover:text-accent font-bold uppercase tracking-[2px] text-[10px] md:text-xs"
                             >
                                 Strategic Impact
                             </a>
