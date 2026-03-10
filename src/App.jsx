@@ -1,0 +1,757 @@
+import { useState, useEffect, useRef } from "react";
+
+const Portfolio = () => {
+    const [activeSection, setActiveSection] = useState("hero");
+    const [scrollY, setScrollY] = useState(0);
+    const [menuOpen, setMenuOpen] = useState(false);
+    const [visibleCards, setVisibleCards] = useState(new Set());
+    const observerRef = useRef(null);
+
+    useEffect(() => {
+        const handleScroll = () => {
+            setScrollY(window.scrollY);
+            const sections = ["hero", "about", "experience", "ventures", "tech", "press", "contact"];
+            for (const id of sections) {
+                const el = document.getElementById(id);
+                if (el) {
+                    const rect = el.getBoundingClientRect();
+                    if (rect.top <= 200 && rect.bottom > 200) {
+                        setActiveSection(id);
+                        break;
+                    }
+                }
+            }
+        };
+        window.addEventListener("scroll", handleScroll);
+        return () => window.removeEventListener("scroll", handleScroll);
+    }, []);
+
+    useEffect(() => {
+        observerRef.current = new IntersectionObserver(
+            (entries) => {
+                entries.forEach((entry) => {
+                    if (entry.isIntersecting) {
+                        setVisibleCards((prev) => new Set([...prev, entry.target.dataset.id]));
+                    }
+                });
+            },
+            { threshold: 0.15 }
+        );
+        document.querySelectorAll("[data-animate]").forEach((el) => {
+            observerRef.current.observe(el);
+        });
+        return () => observerRef.current?.disconnect();
+    }, []);
+
+    const scrollTo = (id) => {
+        document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
+        setMenuOpen(false);
+    };
+
+    const navItems = [
+        { id: "about", label: "About" },
+        { id: "experience", label: "Career" },
+        { id: "ventures", label: "Ventures" },
+        { id: "tech", label: "Tech" },
+        { id: "press", label: "Press" },
+        { id: "contact", label: "Contact" },
+    ];
+
+    const experience = [
+        {
+            period: "2025 — Present",
+            role: "Head of Business, Bangladesh",
+            company: "Tapmad",
+            desc: "Leading Tapmad's entire Bangladesh operation — GTM strategy, telecom partnerships (Grameenphone, Robi Axiata), revenue, payments enablement, and team building. Took the market from 0→1.",
+            tags: ["OTT/Streaming", "GTM", "Partnerships", "B2B/B2C"],
+        },
+        {
+            period: "2022 — 2025",
+            role: "CEO & Director of Photography",
+            company: "Studio By Adi Ltd",
+            desc: "Founded a creative agency in London specializing in commercial photography, cinematic video production, and brand storytelling. Increased audience engagement by 250%.",
+            tags: ["Entrepreneurship", "Creative Direction", "Brand Strategy"],
+        },
+        {
+            period: "2024 — 2025",
+            role: "Business Development Manager",
+            company: "VBites Foods",
+            desc: "Led market expansion for one of the UK's largest plant-based food companies. Built international sales channels and franchise partnerships.",
+            tags: ["FMCG", "International Sales", "Franchise"],
+        },
+        {
+            period: "2022 — 2024",
+            role: "Delegate Acquisition Manager",
+            company: "GlobalData Plc",
+            desc: "Drove delegate engagement strategies across 15+ international events. Improved conversion rates by 25% and expanded into untapped markets.",
+            tags: ["Events", "B2B Sales", "Market Expansion"],
+        },
+        {
+            period: "2017 — 2022",
+            role: "Managing Director",
+            company: "Joycalls Group",
+            desc: "Scaled telco & ad-tech solutions across 3 countries. Managed a portfolio of 12 projects, increased sales by 50%, and led a team of 10+.",
+            tags: ["Telecom", "Ad-Tech", "P&L Management"],
+        },
+        {
+            period: "2015 — 2017",
+            role: "Head of Corporate Sales",
+            company: "Everjobs Bangladesh",
+            desc: "Built the corporate sales engine from scratch. Grew lead generation by 80%, managed 15 sales teams across 3 time zones, expanded into APAC.",
+            tags: ["HR-Tech", "Enterprise Sales", "APAC"],
+        },
+    ];
+
+    const stats = [
+        { value: "15+", label: "Years Experience" },
+        { value: "4000%", label: "Revenue Growth" },
+        { value: "6+", label: "Countries" },
+        { value: "100+", label: "Team Managed" },
+    ];
+
+    return (
+        <div style={{ fontFamily: "'Outfit', sans-serif", background: "#06060A", color: "#E8E4DD", minHeight: "100vh", overflowX: "hidden" }}>
+            <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@200;300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet" />
+
+            <style>{`
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        ::selection { background: #C8A97E; color: #06060A; }
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: #06060A; }
+        ::-webkit-scrollbar-thumb { background: #C8A97E40; border-radius: 3px; }
+        
+        @keyframes fadeUp {
+          from { opacity: 0; transform: translateY(40px); }
+          to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes fadeIn {
+          from { opacity: 0; }
+          to { opacity: 1; }
+        }
+        @keyframes slideRight {
+          from { opacity: 0; transform: translateX(-30px); }
+          to { opacity: 1; transform: translateX(0); }
+        }
+        @keyframes grain {
+          0%, 100% { transform: translate(0,0); }
+          10% { transform: translate(-5%,-10%); }
+          30% { transform: translate(3%,-15%); }
+          50% { transform: translate(-10%,5%); }
+          70% { transform: translate(8%,10%); }
+          90% { transform: translate(-3%,8%); }
+        }
+        @keyframes pulseGlow {
+          0%, 100% { opacity: 0.4; }
+          50% { opacity: 0.8; }
+        }
+        @keyframes marquee {
+          from { transform: translateX(0); }
+          to { transform: translateX(-50%); }
+        }
+
+        .card-animate {
+          opacity: 0;
+          transform: translateY(30px);
+          transition: all 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .card-visible {
+          opacity: 1;
+          transform: translateY(0);
+        }
+        .nav-link {
+          position: relative;
+          cursor: pointer;
+          font-size: 13px;
+          letter-spacing: 2px;
+          text-transform: uppercase;
+          color: #E8E4DD80;
+          transition: color 0.3s;
+          background: none;
+          border: none;
+          font-family: 'Outfit', sans-serif;
+        }
+        .nav-link:hover, .nav-link.active { color: #C8A97E; }
+        .nav-link.active::after {
+          content: '';
+          position: absolute;
+          bottom: -4px;
+          left: 0;
+          width: 100%;
+          height: 1px;
+          background: #C8A97E;
+        }
+        .tag {
+          display: inline-block;
+          padding: 4px 12px;
+          border: 1px solid #C8A97E30;
+          border-radius: 20px;
+          font-size: 11px;
+          letter-spacing: 1px;
+          color: #C8A97E;
+          text-transform: uppercase;
+          margin: 3px;
+        }
+        .exp-card {
+          padding: 32px 0;
+          border-bottom: 1px solid #FFFFFF08;
+          display: grid;
+          grid-template-columns: 180px 1fr;
+          gap: 32px;
+          transition: all 0.3s;
+        }
+        .exp-card:hover { padding-left: 12px; }
+        @media (max-width: 768px) {
+          .exp-card { grid-template-columns: 1fr; gap: 8px; }
+        }
+        .glass-card {
+          background: linear-gradient(135deg, #FFFFFF06, #FFFFFF02);
+          border: 1px solid #FFFFFF08;
+          border-radius: 16px;
+          padding: 40px;
+          backdrop-filter: blur(10px);
+          transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .glass-card:hover {
+          border-color: #C8A97E30;
+          transform: translateY(-4px);
+          box-shadow: 0 20px 60px -15px #C8A97E10;
+        }
+        .cta-btn {
+          display: inline-flex;
+          align-items: center;
+          gap: 10px;
+          padding: 14px 32px;
+          background: transparent;
+          border: 1px solid #C8A97E;
+          color: #C8A97E;
+          font-family: 'Outfit', sans-serif;
+          font-size: 13px;
+          letter-spacing: 2px;
+          text-transform: uppercase;
+          cursor: pointer;
+          transition: all 0.4s;
+          text-decoration: none;
+          border-radius: 0;
+        }
+        .cta-btn:hover {
+          background: #C8A97E;
+          color: #06060A;
+        }
+        .cta-filled {
+          background: #C8A97E;
+          color: #06060A;
+        }
+        .cta-filled:hover {
+          background: #E8E4DD;
+          border-color: #E8E4DD;
+        }
+        .section-label {
+          font-size: 11px;
+          letter-spacing: 4px;
+          text-transform: uppercase;
+          color: #C8A97E;
+          margin-bottom: 16px;
+          font-weight: 500;
+        }
+        .section-title {
+          font-family: 'Playfair Display', serif;
+          font-size: clamp(32px, 5vw, 52px);
+          font-weight: 400;
+          line-height: 1.15;
+          margin-bottom: 24px;
+          color: #E8E4DD;
+        }
+        .hamburger {
+          display: none;
+          flex-direction: column;
+          gap: 5px;
+          cursor: pointer;
+          z-index: 1001;
+          background: none;
+          border: none;
+          padding: 8px;
+        }
+        .hamburger span {
+          width: 24px;
+          height: 1.5px;
+          background: #E8E4DD;
+          transition: all 0.3s;
+        }
+        @media (max-width: 768px) {
+          .hamburger { display: flex; }
+          .nav-desktop { display: none !important; }
+          .mobile-menu {
+            position: fixed;
+            top: 0;
+            right: 0;
+            width: 100%;
+            height: 100vh;
+            background: #06060AF0;
+            backdrop-filter: blur(30px);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 32px;
+            z-index: 1000;
+          }
+          .mobile-menu .nav-link { font-size: 18px; }
+        }
+      `}</style>
+
+            {/* Grain overlay */}
+            <div style={{
+                position: "fixed", top: 0, left: 0, width: "100%", height: "100%",
+                opacity: 0.03, pointerEvents: "none", zIndex: 9999,
+                background: "url(\"data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='256' height='256' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E\")",
+                animation: "grain 8s steps(10) infinite",
+            }} />
+
+            {/* NAV */}
+            <nav style={{
+                position: "fixed", top: 0, left: 0, right: 0, zIndex: 100,
+                padding: "20px 40px",
+                background: scrollY > 50 ? "#06060AE0" : "transparent",
+                backdropFilter: scrollY > 50 ? "blur(20px)" : "none",
+                borderBottom: scrollY > 50 ? "1px solid #FFFFFF06" : "none",
+                transition: "all 0.4s",
+                display: "flex", alignItems: "center", justifyContent: "space-between",
+            }}>
+                <div style={{ fontFamily: "'Playfair Display', serif", fontSize: 22, fontWeight: 700, letterSpacing: 1, cursor: "pointer", color: "#C8A97E" }}
+                    onClick={() => scrollTo("hero")}>
+                    AA
+                </div>
+                <div className="nav-desktop" style={{ display: "flex", gap: 32, alignItems: "center" }}>
+                    {navItems.map((n) => (
+                        <button key={n.id} className={`nav-link ${activeSection === n.id ? "active" : ""}`}
+                            onClick={() => scrollTo(n.id)}>
+                            {n.label}
+                        </button>
+                    ))}
+                </div>
+                <button className="hamburger" onClick={() => setMenuOpen(!menuOpen)}>
+                    <span style={menuOpen ? { transform: "rotate(45deg) translate(4px,4px)" } : {}} />
+                    <span style={menuOpen ? { opacity: 0 } : {}} />
+                    <span style={menuOpen ? { transform: "rotate(-45deg) translate(4px,-4px)" } : {}} />
+                </button>
+                {menuOpen && (
+                    <div className="mobile-menu">
+                        {navItems.map((n) => (
+                            <button key={n.id} className="nav-link" onClick={() => scrollTo(n.id)}>{n.label}</button>
+                        ))}
+                    </div>
+                )}
+            </nav>
+
+            {/* HERO */}
+            <section id="hero" style={{
+                minHeight: "100vh", display: "flex", alignItems: "center",
+                position: "relative", overflow: "hidden",
+                padding: "120px 40px 80px",
+            }}>
+                {/* Ambient glow */}
+                <div style={{
+                    position: "absolute", top: "-20%", right: "-10%",
+                    width: 600, height: 600,
+                    background: "radial-gradient(circle, #C8A97E12, transparent 70%)",
+                    animation: "pulseGlow 6s ease-in-out infinite",
+                }} />
+                <div style={{
+                    position: "absolute", bottom: "-10%", left: "-5%",
+                    width: 400, height: 400,
+                    background: "radial-gradient(circle, #C8A97E08, transparent 70%)",
+                }} />
+
+                <div style={{ maxWidth: 1200, margin: "0 auto", width: "100%", position: "relative" }}>
+                    <div style={{ animation: "fadeIn 1s ease-out" }}>
+                        <p style={{ fontSize: 13, letterSpacing: 4, textTransform: "uppercase", color: "#C8A97E", marginBottom: 24, fontWeight: 500 }}>
+                            Head of Business — Tapmad Bangladesh
+                        </p>
+                    </div>
+                    <h1 style={{
+                        fontFamily: "'Playfair Display', serif",
+                        fontSize: "clamp(48px, 9vw, 120px)",
+                        fontWeight: 400,
+                        lineHeight: 0.95,
+                        animation: "fadeUp 1s ease-out 0.2s both",
+                        marginBottom: 32,
+                    }}>
+                        <span style={{ color: "#E8E4DD" }}>Arif</span>
+                        <br />
+                        <span style={{ color: "#C8A97E" }}>Adito</span>
+                    </h1>
+                    <p style={{
+                        fontSize: "clamp(16px, 2vw, 20px)",
+                        lineHeight: 1.7,
+                        color: "#E8E4DD80",
+                        maxWidth: 560,
+                        animation: "fadeUp 1s ease-out 0.4s both",
+                        fontWeight: 300,
+                    }}>
+                        Scaling businesses across <span style={{ color: "#E8E4DD" }}>SaaS, OTT, Fintech & Telecom</span> —
+                        building market presence from zero in UAE, MENA, APAC & the UK.
+                    </p>
+                    <div style={{ display: "flex", gap: 16, marginTop: 40, animation: "fadeUp 1s ease-out 0.6s both", flexWrap: "wrap" }}>
+                        <a href="mailto:adittoarif@gmail.com" className="cta-btn cta-filled">Get in Touch</a>
+                        <button className="cta-btn" onClick={() => scrollTo("experience")}>View Career ↓</button>
+                    </div>
+
+                    {/* Stats bar */}
+                    <div style={{
+                        display: "grid",
+                        gridTemplateColumns: "repeat(auto-fit, minmax(140px, 1fr))",
+                        gap: 32,
+                        marginTop: 80,
+                        paddingTop: 40,
+                        borderTop: "1px solid #FFFFFF08",
+                        animation: "fadeUp 1s ease-out 0.8s both",
+                    }}>
+                        {stats.map((s, i) => (
+                            <div key={i}>
+                                <div style={{ fontFamily: "'Playfair Display', serif", fontSize: 36, color: "#C8A97E", fontWeight: 400 }}>
+                                    {s.value}
+                                </div>
+                                <div style={{ fontSize: 12, letterSpacing: 2, textTransform: "uppercase", color: "#E8E4DD50", marginTop: 4 }}>
+                                    {s.label}
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            </section>
+
+            {/* MARQUEE */}
+            <div style={{
+                borderTop: "1px solid #FFFFFF06",
+                borderBottom: "1px solid #FFFFFF06",
+                padding: "18px 0",
+                overflow: "hidden",
+                whiteSpace: "nowrap",
+            }}>
+                <div style={{ display: "inline-block", animation: "marquee 30s linear infinite" }}>
+                    {[...Array(2)].map((_, i) => (
+                        <span key={i} style={{ fontSize: 13, letterSpacing: 6, textTransform: "uppercase", color: "#E8E4DD20" }}>
+                            {" "}Business Development  ·  GTM Strategy  ·  Revenue Acceleration  ·  Enterprise Sales  ·  Market Expansion  ·  Telecom VAS  ·  OTT Streaming  ·  SaaS  ·  Fintech  ·  Digital Transformation  ·  Anti-Piracy  ·  AI & Tech  ·
+                        </span>
+                    ))}
+                </div>
+            </div>
+
+            {/* ABOUT */}
+            <section id="about" style={{ padding: "120px 40px", maxWidth: 1200, margin: "0 auto" }}>
+                <div data-animate data-id="about-1"
+                    className={`card-animate ${visibleCards.has("about-1") ? "card-visible" : ""}`}>
+                    <p className="section-label">About</p>
+                    <h2 className="section-title">
+                        Bridging markets,<br />
+                        <em style={{ fontStyle: "italic", color: "#C8A97E" }}>building empires.</em>
+                    </h2>
+                    <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))", gap: 40, marginTop: 40 }}>
+                        <div style={{ lineHeight: 1.85, color: "#E8E4DD90", fontWeight: 300, fontSize: 16 }}>
+                            <p>
+                                I'm a business growth leader with 15+ years of experience turning ambitious visions into
+                                operational reality. From launching Tapmad's Bangladesh operation from scratch to directing
+                                creative productions in London, I thrive at the intersection of strategy, technology, and execution.
+                            </p>
+                            <p style={{ marginTop: 20 }}>
+                                My career spans telecom VAS, OTT streaming, SaaS platforms, plant-based FMCG, and
+                                data analytics — always with a focus on building repeatable revenue engines and forging
+                                partnerships that unlock new markets.
+                            </p>
+                        </div>
+                        <div>
+                            <div style={{ marginBottom: 32 }}>
+                                <p style={{ fontSize: 12, letterSpacing: 2, textTransform: "uppercase", color: "#E8E4DD40", marginBottom: 12 }}>Education</p>
+                                <p style={{ fontWeight: 500 }}>Executive MBA — North South University</p>
+                                <p style={{ color: "#E8E4DD60", fontSize: 14, marginTop: 4 }}>Business Administration & Management</p>
+                                <p style={{ fontWeight: 500, marginTop: 16 }}>BBA — Royal University of Dhaka</p>
+                                <p style={{ color: "#E8E4DD60", fontSize: 14, marginTop: 4 }}>Business Administration & Management</p>
+                            </div>
+                            <div>
+                                <p style={{ fontSize: 12, letterSpacing: 2, textTransform: "uppercase", color: "#E8E4DD40", marginBottom: 12 }}>Markets</p>
+                                <div style={{ display: "flex", flexWrap: "wrap", gap: 6 }}>
+                                    {["Bangladesh", "UAE", "UK", "MENA", "APAC", "SEA"].map(m => (
+                                        <span key={m} className="tag">{m}</span>
+                                    ))}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            {/* EXPERIENCE */}
+            <section id="experience" style={{ padding: "80px 40px 120px", maxWidth: 1200, margin: "0 auto" }}>
+                <div data-animate data-id="exp-header"
+                    className={`card-animate ${visibleCards.has("exp-header") ? "card-visible" : ""}`}>
+                    <p className="section-label">Career</p>
+                    <h2 className="section-title">
+                        15+ years of<br />
+                        <em style={{ fontStyle: "italic", color: "#C8A97E" }}>strategic impact.</em>
+                    </h2>
+                </div>
+                <div style={{ marginTop: 32 }}>
+                    {experience.map((exp, i) => (
+                        <div key={i} data-animate data-id={`exp-${i}`}
+                            className={`exp-card card-animate ${visibleCards.has(`exp-${i}`) ? "card-visible" : ""}`}
+                            style={{ transitionDelay: `${i * 0.08}s` }}>
+                            <div style={{ fontSize: 13, color: "#E8E4DD40", letterSpacing: 1, fontWeight: 300, paddingTop: 2 }}>
+                                {exp.period}
+                            </div>
+                            <div>
+                                <h3 style={{ fontSize: 20, fontWeight: 500, marginBottom: 4 }}>{exp.role}</h3>
+                                <p style={{ color: "#C8A97E", fontSize: 14, letterSpacing: 1, marginBottom: 12 }}>{exp.company}</p>
+                                <p style={{ color: "#E8E4DD70", lineHeight: 1.7, fontSize: 15, fontWeight: 300, marginBottom: 12 }}>{exp.desc}</p>
+                                <div style={{ display: "flex", flexWrap: "wrap", gap: 4 }}>
+                                    {exp.tags.map(t => <span key={t} className="tag">{t}</span>)}
+                                </div>
+                            </div>
+                        </div>
+                    ))}
+                </div>
+            </section>
+
+            {/* VENTURES */}
+            <section id="ventures" style={{ padding: "80px 40px 120px", maxWidth: 1200, margin: "0 auto" }}>
+                <div data-animate data-id="vent-header"
+                    className={`card-animate ${visibleCards.has("vent-header") ? "card-visible" : ""}`}>
+                    <p className="section-label">Ventures</p>
+                    <h2 className="section-title">
+                        Building things<br />
+                        <em style={{ fontStyle: "italic", color: "#C8A97E" }}>that matter.</em>
+                    </h2>
+                </div>
+                <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(320px, 1fr))", gap: 24, marginTop: 40 }}>
+                    <div data-animate data-id="vent-1"
+                        className={`glass-card card-animate ${visibleCards.has("vent-1") ? "card-visible" : ""}`}>
+                        <div style={{ fontSize: 11, letterSpacing: 3, textTransform: "uppercase", color: "#C8A97E", marginBottom: 16, fontWeight: 500 }}>
+                            AI & Consulting
+                        </div>
+                        <h3 style={{ fontFamily: "'Playfair Display', serif", fontSize: 28, fontWeight: 400, marginBottom: 12 }}>Adioris Ltd</h3>
+                        <p style={{ color: "#E8E4DD70", lineHeight: 1.7, fontSize: 15, fontWeight: 300, marginBottom: 20 }}>
+                            UK-registered software development, IT consultancy, and management advisory firm.
+                            Empowering businesses with AI-driven solutions and strategic technology consulting.
+                        </p>
+                        <div style={{ display: "flex", flexWrap: "wrap", gap: 6, marginBottom: 24 }}>
+                            {["AI", "SaaS", "IT Consultancy", "UK"].map(t => <span key={t} className="tag">{t}</span>)}
+                        </div>
+                        <a href="https://adioris.com" target="_blank" rel="noopener noreferrer" className="cta-btn" style={{ fontSize: 12, padding: "10px 24px" }}>
+                            Visit Site →
+                        </a>
+                    </div>
+
+                    <div data-animate data-id="vent-2"
+                        className={`glass-card card-animate ${visibleCards.has("vent-2") ? "card-visible" : ""}`}
+                        style={{ transitionDelay: "0.1s" }}>
+                        <div style={{ fontSize: 11, letterSpacing: 3, textTransform: "uppercase", color: "#C8A97E", marginBottom: 16, fontWeight: 500 }}>
+                            Creative Agency
+                        </div>
+                        <h3 style={{ fontFamily: "'Playfair Display', serif", fontSize: 28, fontWeight: 400, marginBottom: 12 }}>Studio By Adi</h3>
+                        <p style={{ color: "#E8E4DD70", lineHeight: 1.7, fontSize: 15, fontWeight: 300, marginBottom: 20 }}>
+                            London-based creative agency delivering high-end commercial photography, cinematic video production,
+                            and brand storytelling for hospitality, luxury, and F&B brands.
+                        </p>
+                        <div style={{ display: "flex", flexWrap: "wrap", gap: 6, marginBottom: 24 }}>
+                            {["Photography", "Cinematography", "Brand Strategy", "London"].map(t => <span key={t} className="tag">{t}</span>)}
+                        </div>
+                        <a href="https://studiobyadi.com" target="_blank" rel="noopener noreferrer" className="cta-btn" style={{ fontSize: 12, padding: "10px 24px" }}>
+                            Visit Site →
+                        </a>
+                    </div>
+                </div>
+            </section>
+
+            {/* TECH / GITHUB */}
+            <section id="tech" style={{ padding: "80px 40px 120px", maxWidth: 1200, margin: "0 auto" }}>
+                <div data-animate data-id="tech-header"
+                    className={`card-animate ${visibleCards.has("tech-header") ? "card-visible" : ""}`}>
+                    <p className="section-label">Tech & Research</p>
+                    <h2 className="section-title">
+                        Where business<br />
+                        <em style={{ fontStyle: "italic", color: "#C8A97E" }}>meets engineering.</em>
+                    </h2>
+                </div>
+                <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(320px, 1fr))", gap: 24, marginTop: 40 }}>
+                    <div data-animate data-id="tech-1"
+                        className={`glass-card card-animate ${visibleCards.has("tech-1") ? "card-visible" : ""}`}>
+                        <div style={{ fontSize: 40, marginBottom: 16 }}>🎬</div>
+                        <h3 style={{ fontSize: 20, fontWeight: 500, marginBottom: 8 }}>Tapmad Anti-Piracy Platform</h3>
+                        <p style={{ color: "#E8E4DD70", lineHeight: 1.7, fontSize: 14, fontWeight: 300, marginBottom: 16 }}>
+                            Production-ready OTT content protection system with real-time detection, multi-platform monitoring,
+                            and security-first containerized architecture.
+                        </p>
+                        <div style={{ display: "flex", flexWrap: "wrap", gap: 6 }}>
+                            {["Python", "FastAPI", "PostgreSQL", "Docker", "AWS"].map(t => <span key={t} className="tag">{t}</span>)}
+                        </div>
+                    </div>
+
+                    <div data-animate data-id="tech-2"
+                        className={`glass-card card-animate ${visibleCards.has("tech-2") ? "card-visible" : ""}`}
+                        style={{ transitionDelay: "0.1s" }}>
+                        <div style={{ fontSize: 40, marginBottom: 16 }}>🧠</div>
+                        <h3 style={{ fontSize: 20, fontWeight: 500, marginBottom: 8 }}>Eyla — LLM Architecture Research</h3>
+                        <p style={{ color: "#E8E4DD70", lineHeight: 1.7, fontSize: 14, fontWeight: 300, marginBottom: 16 }}>
+                            Published research on identity-anchored LLM architecture with integrated biological priors —
+                            exploring the frontier of AI development and cognitive modeling.
+                        </p>
+                        <div style={{ display: "flex", flexWrap: "wrap", gap: 6 }}>
+                            {["AI Research", "LLM", "Publication", "Cognitive Science"].map(t => <span key={t} className="tag">{t}</span>)}
+                        </div>
+                    </div>
+
+                    <div data-animate data-id="tech-3"
+                        className={`glass-card card-animate ${visibleCards.has("tech-3") ? "card-visible" : ""}`}
+                        style={{ transitionDelay: "0.2s" }}>
+                        <div style={{ fontSize: 40, marginBottom: 16 }}>⚡</div>
+                        <h3 style={{ fontSize: 20, fontWeight: 500, marginBottom: 8 }}>Open Source & GitHub</h3>
+                        <p style={{ color: "#E8E4DD70", lineHeight: 1.7, fontSize: 14, fontWeight: 300, marginBottom: 16 }}>
+                            Building enterprise-grade platforms, scalable APIs & microservices, and deployment-ready
+                            cloud infrastructure. 7 repositories and growing.
+                        </p>
+                        <a href="https://github.com/Adiuk24" target="_blank" rel="noopener noreferrer" className="cta-btn" style={{ fontSize: 12, padding: "10px 24px", marginTop: 8 }}>
+                            View GitHub →
+                        </a>
+                    </div>
+                </div>
+            </section>
+
+            {/* PRESS */}
+            <section id="press" style={{ padding: "80px 40px 120px", maxWidth: 1200, margin: "0 auto" }}>
+                <div data-animate data-id="press-header"
+                    className={`card-animate ${visibleCards.has("press-header") ? "card-visible" : ""}`}>
+                    <p className="section-label">In the Press</p>
+                    <h2 className="section-title">
+                        Making<br />
+                        <em style={{ fontStyle: "italic", color: "#C8A97E" }}>headlines.</em>
+                    </h2>
+                </div>
+                <div style={{ marginTop: 40, display: "flex", flexDirection: "column", gap: 16 }}>
+                    {[
+                        {
+                            outlet: "The Express Tribune",
+                            title: "Pakistan's Tapmad enters Bangladesh market with Grameenphone",
+                            url: "https://tribune.com.pk/story/2572159/pakistans-tapmad-enters-bangladesh-market-with-grameenphone",
+                        },
+                        {
+                            outlet: "PhoneWorld",
+                            title: "Tapmad strengthens regional presence through partnership with Robi Axiata",
+                            url: "https://www.phoneworld.com.pk/tapmad-strengthens-regional-presence-through-partnership-with-robi-axiata-in-bangladesh/",
+                        },
+                        {
+                            outlet: "SAMENA Council",
+                            title: "Pakistan's Tapmad expands to Bangladesh in partnership with Grameenphone",
+                            url: "https://www.samenacouncil.org/samena_daily_news?news=107842",
+                        },
+                        {
+                            outlet: "TNS World",
+                            title: "Tapmad expands regional footprint through strategic partnership in Bangladesh",
+                            url: "https://tns.world/?p=123194",
+                        },
+                    ].map((item, i) => (
+                        <a key={i} href={item.url} target="_blank" rel="noopener noreferrer"
+                            data-animate data-id={`press-${i}`}
+                            className={`card-animate ${visibleCards.has(`press-${i}`) ? "card-visible" : ""}`}
+                            style={{
+                                textDecoration: "none",
+                                color: "inherit",
+                                padding: "28px 32px",
+                                background: "#FFFFFF04",
+                                border: "1px solid #FFFFFF06",
+                                borderRadius: 12,
+                                display: "flex",
+                                justifyContent: "space-between",
+                                alignItems: "center",
+                                gap: 20,
+                                transition: "all 0.3s",
+                                transitionDelay: `${i * 0.08}s`,
+                                cursor: "pointer",
+                            }}
+                            onMouseEnter={e => {
+                                e.currentTarget.style.borderColor = "#C8A97E30";
+                                e.currentTarget.style.background = "#FFFFFF08";
+                            }}
+                            onMouseLeave={e => {
+                                e.currentTarget.style.borderColor = "#FFFFFF06";
+                                e.currentTarget.style.background = "#FFFFFF04";
+                            }}>
+                            <div>
+                                <p style={{ fontSize: 11, letterSpacing: 2, textTransform: "uppercase", color: "#C8A97E", marginBottom: 8 }}>{item.outlet}</p>
+                                <p style={{ fontSize: 17, fontWeight: 400, lineHeight: 1.4 }}>{item.title}</p>
+                            </div>
+                            <span style={{ fontSize: 20, color: "#C8A97E", flexShrink: 0 }}>↗</span>
+                        </a>
+                    ))}
+                </div>
+            </section>
+
+            {/* CONTACT */}
+            <section id="contact" style={{
+                padding: "120px 40px",
+                borderTop: "1px solid #FFFFFF06",
+                textAlign: "center",
+            }}>
+                <div data-animate data-id="contact-1"
+                    className={`card-animate ${visibleCards.has("contact-1") ? "card-visible" : ""}`}
+                    style={{ maxWidth: 700, margin: "0 auto" }}>
+                    <p className="section-label" style={{ textAlign: "center" }}>Let's Connect</p>
+                    <h2 style={{
+                        fontFamily: "'Playfair Display', serif",
+                        fontSize: "clamp(36px, 6vw, 64px)",
+                        fontWeight: 400,
+                        lineHeight: 1.1,
+                        marginBottom: 24,
+                    }}>
+                        Ready to build<br />
+                        <em style={{ fontStyle: "italic", color: "#C8A97E" }}>something great?</em>
+                    </h2>
+                    <p style={{ color: "#E8E4DD60", fontSize: 17, lineHeight: 1.7, marginBottom: 48, fontWeight: 300 }}>
+                        Actively seeking leadership roles in Business Development, Strategic Growth,
+                        and Market Expansion within UAE, MENA, and global markets.
+                    </p>
+                    <div style={{ display: "flex", gap: 16, justifyContent: "center", flexWrap: "wrap" }}>
+                        <a href="mailto:adittoarif@gmail.com" className="cta-btn cta-filled">adittoarif@gmail.com</a>
+                        <a href="tel:+8801707122201" className="cta-btn">+880 170 712 2201</a>
+                    </div>
+                    <div style={{ display: "flex", gap: 32, justifyContent: "center", marginTop: 48 }}>
+                        {[
+                            { label: "LinkedIn", url: "https://www.linkedin.com/in/arifadito-025088b4" },
+                            { label: "GitHub", url: "https://github.com/Adiuk24" },
+                            { label: "Adioris", url: "https://adioris.com" },
+                            { label: "Studio By Adi", url: "https://studiobyadi.com" },
+                        ].map((link) => (
+                            <a key={link.label} href={link.url} target="_blank" rel="noopener noreferrer"
+                                style={{
+                                    color: "#E8E4DD50", fontSize: 13, letterSpacing: 1,
+                                    textDecoration: "none", transition: "color 0.3s",
+                                }}
+                                onMouseEnter={e => e.target.style.color = "#C8A97E"}
+                                onMouseLeave={e => e.target.style.color = "#E8E4DD50"}>
+                                {link.label}
+                            </a>
+                        ))}
+                    </div>
+                </div>
+            </section>
+
+            {/* FOOTER */}
+            <footer style={{
+                padding: "32px 40px",
+                borderTop: "1px solid #FFFFFF06",
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "center",
+                flexWrap: "wrap",
+                gap: 12,
+            }}>
+                <p style={{ fontSize: 12, color: "#E8E4DD30", letterSpacing: 1 }}>
+                    © 2026 Arif Ahmed Adito. All rights reserved.
+                </p>
+                <p style={{ fontSize: 12, color: "#E8E4DD20" }}>
+                    Dhaka · London · Global
+                </p>
+            </footer>
+        </div>
+    );
+};
+
+export default Portfolio;
