@@ -65,11 +65,11 @@ export const Research = () => {
                                     <a
                                         href={item.url}
                                         target="_blank"
-                                        className="group relative inline-flex items-center gap-4 px-8 py-4 bg-white/5 border border-white/10 rounded-xl text-accent font-bold text-[11px] uppercase tracking-[4px] overflow-hidden hover:bg-accent hover:text-background transition-all duration-500"
+                                        className="group relative inline-flex items-center gap-4 px-10 py-5 bg-accent/5 border border-accent/20 rounded-full text-accent font-bold text-[11px] uppercase tracking-[4px] overflow-hidden hover:bg-accent hover:text-background transition-all duration-700 shadow-xl shadow-accent/5"
                                     >
                                         <span className="relative z-10 flex items-center gap-3">
                                             View Publication
-                                            <ArrowUpRight size={14} />
+                                            <ArrowUpRight size={16} className="group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
                                         </span>
                                     </a>
                                     <div className="text-[10px] font-mono text-foreground/20 py-2 px-5 border border-white/5 rounded-full tracking-widest bg-white/[0.01]">
