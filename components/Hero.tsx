@@ -18,7 +18,7 @@ export default function Hero() {
   return (
     <section ref={containerRef} id="about" className="relative min-h-screen flex flex-col items-center justify-start pt-32 md:pt-48 px-6 overflow-hidden bg-black">
       {/* Dynamic Background */}
-      <motion.div 
+      <motion.div
         style={{ opacity }}
         className="absolute inset-0 z-0"
       >
@@ -31,7 +31,7 @@ export default function Hero() {
           className="space-y-8 max-w-3xl mx-auto"
         >
           <div className="space-y-4">
-            <motion.span 
+            <motion.span
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ duration: 1 }}
@@ -39,7 +39,7 @@ export default function Hero() {
             >
               Business Growth Leader
             </motion.span>
-            <motion.h1 
+            <motion.h1
               initial={{ opacity: 0, y: 40 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
@@ -64,14 +64,14 @@ export default function Hero() {
             transition={{ duration: 1, delay: 0.5 }}
             className="flex flex-wrap justify-center gap-8 pt-4"
           >
-            <a 
+            <a
               href="mailto:adittoarif@gmail.com"
               className="text-white font-semibold flex items-center gap-2 hover:text-[#F27D26] transition-colors group"
             >
               Contact Me
               <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
             </a>
-            <a 
+            <a
               href="#experience"
               className="text-[#A19E95] font-semibold hover:text-white transition-colors"
             >
@@ -86,18 +86,19 @@ export default function Hero() {
           transition={{ duration: 1.5, delay: 0.6, ease: [0.16, 1, 0.3, 1] }}
           className="relative aspect-[16/9] w-full max-w-5xl mx-auto rounded-3xl overflow-hidden border border-white/10"
         >
-          <Image 
-            src="https://picsum.photos/seed/global-leadership/1920/1080" 
+          <Image
+            src="/hero-bg.png"
             alt="Strategic Growth & Leadership"
             fill
             className="object-cover grayscale hover:grayscale-0 transition-all duration-1000"
             referrerPolicy="no-referrer"
+            unoptimized
           />
           <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
         </motion.div>
       </div>
 
-      <motion.div 
+      <motion.div
         animate={{ y: [0, 10, 0] }}
         transition={{ duration: 2, repeat: Infinity }}
         className="absolute bottom-12 left-1/2 -translate-x-1/2 text-[#A19E95] flex flex-col items-center gap-2"
