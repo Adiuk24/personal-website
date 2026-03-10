@@ -1,41 +1,28 @@
-# Personal Portfolio
+# Premium Portfolio (Next.js)
 
-A modern, high-performance personal portfolio built with React and Vite.
+A high-performance, polished personal portfolio built with Next.js, Framer Motion, and Tailwind CSS.
 
-## Tech Stack
-- **React**: UI components and state management.
-- **Vite**: Next-generation frontend tooling for fast builds and HMR.
-- **Vanilla CSS**: Custom styling for a premium aesthetic.
+## Features
+- **Next.js App Router**: Modern, efficient routing.
+- **Micro-Animations**: Ultra-smooth transitions using Framer Motion.
+- **Glassmorphic Design**: A premium, sophisticated aesthetic.
+- **Static Export**: Optimized for lightning-fast delivery via GitHub Pages.
 
-## Getting Started
+## Development
 
-### Prerequisites
-- Node.js (v18 or higher)
-- npm
+Install dependencies:
+```bash
+npm install
+```
 
-### Installation
-1. Clone the repository:
-   ```bash
-   git clone https://github.com/Adiuk24/personal-website.git
-   cd personal-website
-   ```
-2. Install dependencies:
-   ```bash
-   npm install
-   ```
-
-### Development
-Start the development server:
+Start the dev server:
 ```bash
 npm run dev
 ```
 
-### Build
-Generate a production-ready build:
+Build for production:
 ```bash
 npm run build
 ```
-The output will be in the `dist` directory.
 
-### Deployment
-This project is automatically deployed to GitHub Pages via GitHub Actions whenever changes are pushed to the `main` branch.
+The output will be in the `out/` directory.
