@@ -91,7 +91,7 @@ export const Hero = () => {
                             initial={{ opacity: 0, y: 20 }}
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ delay: 1, duration: 1 }}
-                            className="flex flex-wrap gap-5 md:gap-6"
+                            className="flex flex-col sm:flex-row gap-5 md:gap-6 w-full sm:w-auto"
                         >
                             <a
                                 href="mailto:adittoarif@gmail.com"
