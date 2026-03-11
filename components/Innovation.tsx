@@ -23,7 +23,7 @@ const ventures = [
   {
     title: 'Eyla — LLM Research',
     description: 'Identity-anchored LLM architecture with integrated biological priors — exploring the frontier of cognitive modeling and AI development.',
-    link: 'https://doi.org/10.5281/zenodo.18922059',
+    link: '/research',
     icon: <Brain className="text-[#F27D26]" />,
     type: 'Research',
     highlights: ['Cognitive Modeling', 'Biological Priors', 'LLM Architecture']
@@ -98,12 +98,12 @@ export default function Innovation() {
               <div className="pt-8">
                 <a 
                   href={venture.link}
-                  target="_blank"
-                  rel="noopener noreferrer"
+                  target={venture.type === 'Research' ? '_self' : '_blank'}
+                  rel={venture.type === 'Research' ? undefined : 'noopener noreferrer'}
                   className="inline-flex items-center gap-3 text-white font-bold group/link"
                 >
                   <span className="border-b border-white/20 group-hover/link:border-[#F27D26] transition-colors">
-                    {venture.type === 'Research' ? 'View Publication' : 'Visit Venture'}
+                    {venture.type === 'Research' ? 'View Research Page' : 'Visit Venture'}
                   </span>
                   <ExternalLink size={16} className="text-[#F27D26] group-hover/link:translate-x-1 group-hover/link:-translate-y-1 transition-transform" />
                 </a>
