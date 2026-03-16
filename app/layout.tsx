@@ -57,7 +57,7 @@ export const metadata: Metadata = {
     images: ['https://arifadito.com/og-image.png'],
   },
   verification: {
-    google: 'YOUR_GOOGLE_VERIFICATION_CODE', // Replace with your actual Google verification code from Search Console
+    google: 'Q1U0UL_ObRfoFeSKvShOv8sGXVpYv2bu_4_BtVM_6AU',
   },
 };
 
