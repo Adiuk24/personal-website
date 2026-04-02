@@ -4,9 +4,9 @@ import Navbar from '@/components/Navbar';
 import ChatBot from '@/components/ChatBot';
 
 export const metadata: Metadata = {
-  title: 'Research — Eyla: Identity-Anchored LLM Architecture | Arif Adito',
+  title: 'Research — Eyla: Identity-Anchored LLM Architecture | Arif Aditto',
   description:
-    'Eyla: Toward an Identity-Anchored LLM Architecture with Integrated Biological Priors. Vision, implementation attempt, and lessons from AI-assisted development. Published on Zenodo, March 2026.',
+    'Eyla: Toward an Identity-Anchored LLM Architecture with Integrated Biological Priors -- Vision, Implementation Attempt, and Lessons from AI-Assisted Development. Published on arXiv April 2, 2026.',
 };
 
 export default function Page() {

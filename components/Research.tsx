@@ -25,7 +25,9 @@ const meta = {
   title: 'Eyla: Toward an Identity-Anchored LLM Architecture with Integrated Biological Priors',
   subtitle: 'Vision, Implementation Attempt, and Lessons from AI-Assisted Development',
   author: 'Aditto Arif — Independent Researcher, Dhaka, Bangladesh',
-  published: 'March 2026',
+  published: 'April 2, 2026',
+  arxivId: '2604.00009',
+  arxivUrl: 'https://arxiv.org/abs/2604.00009',
   doi: '10.5281/zenodo.18922059',
   doiUrl: 'https://doi.org/10.5281/zenodo.18922059',
   keywords: ['Identity Consistency', 'Large Language Models', 'AI-Assisted Development', 'Failure Analysis', 'State-Space Models', 'Agent Architecture'],
@@ -211,24 +213,42 @@ export default function Research() {
               <span>{meta.author}</span>
               <span>{meta.published}</span>
               <a
-                href={meta.doiUrl}
+                href={meta.arxivUrl}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-1.5 text-white hover:text-[#F27D26] transition-colors font-medium"
               >
-                DOI: {meta.doi}
+                arXiv: {meta.arxivId}
                 <ExternalLink size={13} />
               </a>
-            </div>
-
-            <div className="pt-4">
               <a
                 href={meta.doiUrl}
                 target="_blank"
                 rel="noopener noreferrer"
+                className="inline-flex items-center gap-1.5 text-[#A19E95] hover:text-[#F27D26] transition-colors"
+              >
+                Zenodo: {meta.doi}
+                <ExternalLink size={13} />
+              </a>
+            </div>
+
+            <div className="pt-4 flex flex-wrap gap-4">
+              <a
+                href={meta.arxivUrl}
+                target="_blank"
+                rel="noopener noreferrer"
                 className="inline-flex items-center gap-3 bg-[#F27D26] hover:bg-[#F27D26]/90 text-black font-bold text-sm px-7 py-3.5 rounded-full transition-all duration-300 hover:scale-105"
               >
-                Read Full Paper
+                Read on arXiv
+                <ExternalLink size={14} />
+              </a>
+              <a
+                href={meta.doiUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-3 border border-white/15 hover:border-white/30 text-white font-bold text-sm px-7 py-3.5 rounded-full transition-all duration-300 hover:scale-105"
+              >
+                Zenodo Archive
                 <ExternalLink size={14} />
               </a>
             </div>
@@ -621,13 +641,13 @@ export default function Research() {
             className="flex flex-col sm:flex-row gap-4 justify-center pt-4"
           >
             <a
-              href={meta.doiUrl}
+              href={meta.arxivUrl}
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center justify-center gap-2 bg-[#F27D26] hover:bg-[#F27D26]/90 text-black font-bold text-sm px-8 py-4 rounded-full transition-all duration-300 hover:scale-105"
             >
               <BookOpen size={15} />
-              Read Full Paper on Zenodo
+              Read Full Paper on arXiv
             </a>
             <Link
               href="/"
@@ -646,12 +666,16 @@ export default function Research() {
           <div className="glass rounded-2xl p-6 border border-white/5 font-mono text-xs text-[#A19E95] leading-relaxed whitespace-pre-wrap break-all">
 {`@misc{aditto2026eyla,
   title  = {Eyla: Toward an Identity-Anchored LLM Architecture
-            with Integrated Biological Priors},
+            with Integrated Biological Priors -- Vision, Implementation
+            Attempt, and Lessons from AI-Assisted Development},
   author = {Aditto Arif},
   year   = {2026},
-  month  = {March},
+  month  = {April},
+  eprint = {2604.00009},
+  archivePrefix = {arXiv},
+  primaryClass  = {cs.AI},
   doi    = {10.5281/zenodo.18922059},
-  url    = {https://doi.org/10.5281/zenodo.18922059},
+  url    = {https://arxiv.org/abs/2604.00009},
   note   = {Independent Research, Dhaka, Bangladesh}
 }`}
           </div>
