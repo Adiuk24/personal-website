@@ -1,7 +1,7 @@
 'use client';
 
 import { motion } from 'motion/react';
-import { ExternalLink, Code, Camera, Brain, Sparkles, Cpu } from 'lucide-react';
+import { ExternalLink, Camera, Brain, Cpu, Sparkles } from 'lucide-react';
 
 const ventures = [
   {
@@ -21,12 +21,12 @@ const ventures = [
     highlights: ['Cinematic Production', 'Brand Storytelling', 'Luxury F&B']
   },
   {
-    title: 'Eyla — LLM Research',
-    description: 'Identity-anchored LLM architecture with integrated biological priors — exploring the frontier of cognitive modeling and AI development.',
+    title: 'LLM & Systems Research',
+    description: 'Published research in pure Rust end-to-end LM pretraining (DOI: 10.5281/zenodo.21621066) and identity-anchored LLM architectures (arXiv: 2604.00009). Exploring frontiers in ML framework failure modes & cognitive modeling.',
     link: '/research',
     icon: <Brain className="text-[#F27D26]" />,
     type: 'Research',
-    highlights: ['Cognitive Modeling', 'Biological Priors', 'LLM Architecture']
+    highlights: ['Pure Rust LM Pretraining', 'Framework Failure Taxonomy', 'Identity-Anchored LLMs']
   }
 ];
 
@@ -54,7 +54,7 @@ export default function Innovation() {
             </motion.h2>
           </div>
           <p className="text-[#A19E95] text-lg max-w-md font-light leading-relaxed">
-            Forging paths in technology and creative excellence through founded entities and deep research.
+            Forging paths in technology, creative excellence, and open-access AI systems research.
           </p>
         </div>
 
@@ -74,7 +74,8 @@ export default function Innovation() {
                   <div className="w-16 h-16 rounded-3xl bg-white/5 flex items-center justify-center group-hover:bg-[#F27D26]/10 transition-all duration-700">
                     {venture.icon}
                   </div>
-                  <span className="text-[10px] uppercase tracking-[0.3em] text-[#A19E95] font-bold border border-white/10 px-4 py-2 rounded-full">
+                  <span className="text-[10px] uppercase tracking-[0.3em] text-[#A19E95] font-bold border border-white/10 px-4 py-2 rounded-full flex items-center gap-1.5">
+                    {venture.type === 'Research' && <Sparkles size={10} className="text-[#F27D26]" />}
                     {venture.type}
                   </span>
                 </div>
@@ -103,7 +104,7 @@ export default function Innovation() {
                   className="inline-flex items-center gap-3 text-white font-bold group/link"
                 >
                   <span className="border-b border-white/20 group-hover/link:border-[#F27D26] transition-colors">
-                    {venture.type === 'Research' ? 'View Research Page' : 'Visit Venture'}
+                    {venture.type === 'Research' ? 'Explore Research Hub' : 'Visit Venture'}
                   </span>
                   <ExternalLink size={16} className="text-[#F27D26] group-hover/link:translate-x-1 group-hover/link:-translate-y-1 transition-transform" />
                 </a>

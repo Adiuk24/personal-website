@@ -4,9 +4,9 @@ import Navbar from '@/components/Navbar';
 import ChatBot from '@/components/ChatBot';
 
 export const metadata: Metadata = {
-  title: 'Research — Eyla: Identity-Anchored LLM Architecture | Arif Aditto',
+  title: 'Research & Publications — Pure Rust LM Pretraining & Eyla Architecture | Arif Adito',
   description:
-    'Eyla: Toward an Identity-Anchored LLM Architecture with Integrated Biological Priors -- Vision, Implementation Attempt, and Lessons from AI-Assisted Development. Published on arXiv April 2, 2026.',
+    'Published research by Arif Adito: "Training a Language Model End-to-End in Rust: An Experience Report" (Zenodo DOI: 10.5281/zenodo.21621066) and "Eyla: Toward an Identity-Anchored LLM Architecture" (arXiv: 2604.00009).',
 };
 
 export default function Page() {
