@@ -2,6 +2,7 @@ import Navbar from '@/components/Navbar';
 import Hero from '@/components/Hero';
 import Experience from '@/components/Experience';
 import Innovation from '@/components/Innovation';
+import FeaturedResearch from '@/components/FeaturedResearch';
 import Certifications from '@/components/Certifications';
 import News from '@/components/News';
 import Contact from '@/components/Contact';
@@ -14,6 +15,7 @@ export default function Home() {
       <Hero />
       <Experience />
       <Innovation />
+      <FeaturedResearch />
       <Certifications />
       <News />
       <Contact />

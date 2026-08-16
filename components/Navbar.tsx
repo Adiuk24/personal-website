@@ -1,7 +1,7 @@
 'use client';
 
 import { motion, useScroll } from 'motion/react';
-import { Linkedin, Menu, X } from 'lucide-react';
+import { Linkedin, Github, Menu, X } from 'lucide-react';
 import { useState, useEffect } from 'react';
 import Logo from './Logo';
 
@@ -54,9 +54,16 @@ export default function Navbar() {
         <motion.div 
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          className="flex items-center gap-5"
+          className="flex items-center gap-4"
         >
-          <a href="https://www.linkedin.com/in/arif-adito-025088b4" target="_blank" rel="noopener noreferrer" className="text-[#A19E95] hover:text-white transition-colors">
+          <a href="https://huggingface.co/Adiuk" target="_blank" rel="noopener noreferrer" className="text-[#A19E95] hover:text-[#F27D26] transition-colors flex items-center gap-1.5 text-xs" title="Hugging Face Profile">
+            <span className="text-base leading-none">🤗</span>
+            <span className="hidden sm:inline font-medium">HF</span>
+          </a>
+          <a href="https://github.com/Adiuk24" target="_blank" rel="noopener noreferrer" className="text-[#A19E95] hover:text-white transition-colors" title="GitHub Profile">
+            <Github size={14} />
+          </a>
+          <a href="https://www.linkedin.com/in/arif-adito-025088b4" target="_blank" rel="noopener noreferrer" className="text-[#A19E95] hover:text-white transition-colors" title="LinkedIn Profile">
             <Linkedin size={14} />
           </a>
           <button className="md:hidden text-[#A19E95]" onClick={() => setIsOpen(!isOpen)}>

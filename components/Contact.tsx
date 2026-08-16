@@ -54,6 +54,11 @@ export default function Contact() {
                   name="GitHub" 
                   href="https://github.com/Adiuk24" 
                 />
+                <SocialLink 
+                  icon={<span className="text-xl leading-none">🤗</span>} 
+                  name="Hugging Face" 
+                  href="https://huggingface.co/Adiuk" 
+                />
               </div>
             </div>
             

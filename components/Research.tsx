@@ -543,7 +543,7 @@ export default function Research() {
                     </p>
 
                     <div className="bg-black/60 rounded-2xl p-6 font-mono text-xs text-[#F5F2ED] space-y-3 border border-white/10">
-                      <div className="text-white/40">// Pure Rust Verification Test Assertion</div>
+                      <div className="text-white/40">{'// Pure Rust Verification Test Assertion'}</div>
                       <div className="text-[#F27D26]">
                         #[test]<br />
                         fn test_gradient_flow_arbiter() &#123;
@@ -553,8 +553,8 @@ export default function Research() {
                         let (loss, grads) = model.forward_backward_step(dummy_batch);<br />
                         <br />
                         for (param_name, grad) in grads.iter() &#123;<br />
-                        &nbsp;&nbsp;assert!(grad.is_finite(), "NaN/Inf detected in &#123;&#125;", param_name);<br />
-                        &nbsp;&nbsp;assert!(grad.norm() &gt; 1e-7, "Silent zero-gradient bug in &#123;&#125;", param_name);<br />
+                        &nbsp;&nbsp;assert!(grad.is_finite(), &quot;NaN/Inf detected in &#123;&#125;&quot;, param_name);<br />
+                        &nbsp;&nbsp;assert!(grad.norm() &gt; 1e-7, &quot;Silent zero-gradient bug in &#123;&#125;&quot;, param_name);<br />
                         &#125;
                       </div>
                       <div className="text-[#F27D26]">&#125;</div>
@@ -679,7 +679,7 @@ export default function Research() {
                       Proposed system design<span className="text-[#F27D26]">.</span>
                     </SectionHeading>
                     <p className="text-[#A19E95] font-light leading-relaxed">
-                      Eyla's central thesis: <em className="text-white not-italic">identity consistency — not scale</em> — is the missing capability in current LLMs. The architecture targets consumer hardware with a training budget under $200.
+                      Eyla&apos;s central thesis: <em className="text-white not-italic">identity consistency — not scale</em> — is the missing capability in current LLMs. The architecture targets consumer hardware with a training budget under $200.
                     </p>
                   </div>
 
