@@ -6,7 +6,8 @@ import { Award, CheckCircle2 } from 'lucide-react';
 // Synced from LinkedIn (linkedin.com/in/arif-adito-025088b4) — Aug 2026.
 // Google PM specialization course certificates are folded into the specialization entry.
 
-const featured = [
+const featured: { title: string; issuer: string; date: string; note?: string; isNew?: boolean }[] = [
+  { title: "Claude Code 101", issuer: "Anthropic", date: "Aug 2026", note: "Agentic coding with Claude Code — Anthropic Academy", isNew: true },
   { title: "Google Project Management: Specialization", issuer: "Google", date: "Dec 2024", note: "6 course certificates incl. Agile PM & Capstone" },
   { title: "Google Digital Marketing & E-commerce", issuer: "Google", date: "Feb 2025" },
   { title: "Google Business Intelligence", issuer: "Google", date: "Feb 2025" },
@@ -114,8 +115,13 @@ export default function Certifications() {
               whileInView={{ opacity: 1, scale: 1 }}
               viewport={{ once: true }}
               transition={{ delay: i * 0.05 }}
-              className="p-8 glass rounded-[32px] border border-white/5 hover:border-[#F27D26]/30 transition-all duration-500 group"
+              className={`relative p-8 glass rounded-[32px] border transition-all duration-500 group ${cert.isNew ? 'border-[#F27D26]/40 hover:border-[#F27D26]/70' : 'border-white/5 hover:border-[#F27D26]/30'}`}
             >
+              {cert.isNew && (
+                <span className="absolute -top-3 left-8 bg-[#F27D26] text-black text-[9px] font-mono font-bold uppercase tracking-widest px-3 py-1 rounded-full">
+                  New · Aug 2026
+                </span>
+              )}
               <div className="flex items-start justify-between mb-6">
                 <div className="w-12 h-12 rounded-2xl bg-[#F27D26]/10 flex items-center justify-center group-hover:bg-[#F27D26] transition-all duration-500">
                   <Award className="text-[#F27D26] group-hover:text-white" size={24} />
