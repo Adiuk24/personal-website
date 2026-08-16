@@ -22,6 +22,9 @@ const groups: { label: string; certs: { title: string; issuer: string; date?: st
   {
     label: "Product & AI",
     certs: [
+      { title: "Claude Code in Action", issuer: "Anthropic", date: "Aug 2026" },
+      { title: "Building with the Claude API", issuer: "Anthropic", date: "Aug 2026" },
+      { title: "Claude Platform 101", issuer: "Anthropic", date: "Aug 2026" },
       { title: "AI for Product Management", issuer: "Pendo.io", date: "Dec 2024" },
       { title: "Product Analytics Certification", issuer: "Pendo.io", date: "Dec 2024" },
       { title: "Product Management Basics Certification", issuer: "Pendo.io", date: "Dec 2024" },
