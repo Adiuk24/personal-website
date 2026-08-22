@@ -2,17 +2,14 @@
 
 import { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { X, Send, Zap, CalendarCheck } from 'lucide-react';
+import { X, Send, Zap } from 'lucide-react';
+import BookingForm from './BookingForm';
 
 // All prompting + the API key live server-side in the Netlify function.
 const API_BASE = 'https://arifadito-api.netlify.app/.netlify/functions';
-const BOOKING_ENDPOINT = 'https://formsubmit.co/ajax/adittoarif@gmail.com';
 const BOOK_TOKEN = '[BOOK]';
 
 type Message = { role: 'user' | 'bot'; text: string };
-type Booking = { name: string; email: string; company: string; topic: string; preferred_time: string; notes: string };
-
-const EMPTY_BOOKING: Booking = { name: '', email: '', company: '', topic: '', preferred_time: '', notes: '' };
 
 export default function ChatBot() {
   const [isOpen, setIsOpen] = useState(false);
@@ -22,13 +19,11 @@ export default function ChatBot() {
   const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [showBooking, setShowBooking] = useState(false);
-  const [booking, setBooking] = useState<Booking>(EMPTY_BOOKING);
-  const [bookingState, setBookingState] = useState<'idle' | 'sending' | 'done' | 'error'>('idle');
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
-  }, [messages, showBooking, bookingState]);
+  }, [messages, showBooking]);
 
   const handleSend = async () => {
     if (!input.trim() || isLoading) return;
@@ -66,40 +61,6 @@ export default function ChatBot() {
     }
   };
 
-  const submitBooking = async () => {
-    if (bookingState === 'sending') return;
-    if (!booking.name.trim() || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(booking.email)) {
-      setBookingState('error');
-      return;
-    }
-    setBookingState('sending');
-    try {
-      // Submitted straight from the browser: FormSubmit needs a real page
-      // Referer (it 403s datacenter IPs) and the endpoint is just Arif's
-      // already-public email, so there is no secret to protect here.
-      const r = await fetch(BOOKING_ENDPOINT, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
-        body: JSON.stringify({
-          _subject: `Booking request from ${booking.name} — arifadito.com`,
-          _template: 'table',
-          ...booking,
-        }),
-      });
-      // FormSubmit answers 200 even when it refuses the message.
-      const result = await r.json().catch(() => ({}));
-      if (!r.ok || String(result.success) !== 'true') {
-        throw new Error(result.message || `book failed ${r.status}`);
-      }
-      setBookingState('done');
-      setShowBooking(false);
-      setMessages(prev => [...prev, { role: 'bot', text: `Thanks ${booking.name.split(' ')[0]} — your request is with Arif. He'll reply to ${booking.email} to confirm a time.` }]);
-      setBooking(EMPTY_BOOKING);
-    } catch (e) {
-      console.error('Booking Error:', e);
-      setBookingState('error');
-    }
-  };
 
   return (
     <>
@@ -192,36 +153,17 @@ export default function ChatBot() {
                   animate={{ opacity: 1, y: 0 }}
                   className="bg-white/5 border border-[#D4AF37]/30 rounded-3xl p-5 space-y-3"
                 >
-                  <div className="flex items-center gap-2 text-[#D4AF37]">
-                    <CalendarCheck size={15} />
-                    <span className="text-[11px] font-bold uppercase tracking-widest">Book a call with Arif</span>
-                  </div>
-                  {([
-                    ['name', 'Your name *'],
-                    ['email', 'Email *'],
-                    ['company', 'Company'],
-                    ['topic', 'What do you need help with?'],
-                    ['preferred_time', 'Preferred time (with timezone)'],
-                  ] as [keyof Booking, string][]).map(([field, placeholder]) => (
-                    <input
-                      key={field}
-                      type={field === 'email' ? 'email' : 'text'}
-                      value={booking[field]}
-                      onChange={e => { setBooking(prev => ({ ...prev, [field]: e.target.value })); if (bookingState === 'error') setBookingState('idle'); }}
-                      placeholder={placeholder}
-                      className="w-full bg-black/40 border border-white/10 rounded-xl py-2.5 px-4 text-[12px] text-white placeholder:text-[#A19E95]/60 focus:outline-none focus:border-[#D4AF37]/50 transition-all"
-                    />
-                  ))}
-                  {bookingState === 'error' && (
-                    <p className="text-[11px] text-red-400">Please add your name and a valid email — or try again in a moment.</p>
-                  )}
-                  <button
-                    onClick={submitBooking}
-                    disabled={bookingState === 'sending'}
-                    className="w-full py-3 bg-[#D4AF37] text-black text-[12px] font-bold rounded-xl hover:brightness-110 active:scale-[0.99] transition-all disabled:opacity-50"
-                  >
-                    {bookingState === 'sending' ? 'Sending…' : 'Request booking'}
-                  </button>
+                  <BookingForm
+                    accent="#D4AF37"
+                    size="chat"
+                    onBooked={b => {
+                      setShowBooking(false);
+                      setMessages(prev => [...prev, {
+                        role: 'bot',
+                        text: `Thanks ${b.name.split(' ')[0]} — your request is with Arif. He'll reply to ${b.email} to confirm a time.`,
+                      }]);
+                    }}
+                  />
                 </motion.div>
               )}
 

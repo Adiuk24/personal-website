@@ -2,6 +2,7 @@
 
 import { motion } from 'motion/react';
 import { Mail, Phone, Linkedin, Github, ArrowUpRight } from 'lucide-react';
+import BookingForm from './BookingForm';
 
 export default function Contact() {
   return (
@@ -41,6 +42,16 @@ export default function Contact() {
           </div>
 
           <div className="space-y-12">
+            <div id="book" className="p-12 glass rounded-[60px] space-y-6">
+              <div className="space-y-2">
+                <h3 className="text-3xl font-serif">Book a call</h3>
+                <p className="text-[#A19E95] text-sm font-light">
+                  Growth strategy, OTT &amp; telecom GTM, or AI-native operations. Send a few details and Arif replies to confirm a time.
+                </p>
+              </div>
+              <BookingForm />
+            </div>
+
             <div className="p-12 glass rounded-[60px] space-y-8">
               <h3 className="text-3xl font-serif">Connect with me</h3>
               <div className="grid grid-cols-1 gap-4">
