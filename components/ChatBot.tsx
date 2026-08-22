@@ -6,6 +6,7 @@ import { X, Send, Zap, CalendarCheck } from 'lucide-react';
 
 // All prompting + the API key live server-side in the Netlify function.
 const API_BASE = 'https://arifadito-api.netlify.app/.netlify/functions';
+const BOOKING_ENDPOINT = 'https://formsubmit.co/ajax/adittoarif@gmail.com';
 const BOOK_TOKEN = '[BOOK]';
 
 type Message = { role: 'user' | 'bot'; text: string };
@@ -73,12 +74,23 @@ export default function ChatBot() {
     }
     setBookingState('sending');
     try {
-      const r = await fetch(`${API_BASE}/book`, {
+      // Submitted straight from the browser: FormSubmit needs a real page
+      // Referer (it 403s datacenter IPs) and the endpoint is just Arif's
+      // already-public email, so there is no secret to protect here.
+      const r = await fetch(BOOKING_ENDPOINT, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(booking),
+        headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+        body: JSON.stringify({
+          _subject: `Booking request from ${booking.name} — arifadito.com`,
+          _template: 'table',
+          ...booking,
+        }),
       });
-      if (!r.ok) throw new Error(`book failed ${r.status}`);
+      // FormSubmit answers 200 even when it refuses the message.
+      const result = await r.json().catch(() => ({}));
+      if (!r.ok || String(result.success) !== 'true') {
+        throw new Error(result.message || `book failed ${r.status}`);
+      }
       setBookingState('done');
       setShowBooking(false);
       setMessages(prev => [...prev, { role: 'bot', text: `Thanks ${booking.name.split(' ')[0]} — your request is with Arif. He'll reply to ${booking.email} to confirm a time.` }]);
