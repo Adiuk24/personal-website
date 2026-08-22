@@ -2,49 +2,32 @@
 
 import { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { X, Send, Zap } from 'lucide-react';
+import { X, Send, Zap, CalendarCheck } from 'lucide-react';
 
-const SYSTEM_INSTRUCTION = `You are "Growth Intelligence", the advanced AI assistant for Arif Adito. 
-Arif is a high-impact Business Growth Leader with 15+ years of experience in SaaS, OTT, and Fintech, as well as an independent AI researcher.
-
-Your mission is to:
-1. Clarify Arif's professional journey and impact.
-2. Showcase his ventures: Adioris Tech (AI solutions) and Studio By Adi (Creative agency).
-3. Explain his published AI research:
-   - Latest Paper (July 2026): "Training a Language Model End-to-End in Rust: An Experience Report" (Zenodo DOI: 10.5281/zenodo.21621066). Documenting a pure Rust LM pretraining run ($164 GPU budget, Bangla-first 0.4B LM), Candle/Burn framework failure taxonomy (5 Candle & 3 Burn defects), and the Gradient-Flow Arbiter verification harness.
-   - Eyla Paper (April 2026): "Eyla: Toward an Identity-Anchored LLM Architecture" (arXiv: 2604.00009).
-4. Facilitate connections by providing his contact details and encouraging collaboration.
-
-Key Professional Assets:
-- Current: Head of Business (Bangladesh) at Tapmad. Scaling operations 0 to 1.
-- Education: Harvard (Strategic Leadership), MIT (Marketing Analytics), Wharton (AI for Business), Reforge (Growth Strategy).
-- Skills: GTM Strategy, Digital Transformation, AI Strategy, Revenue Growth, Telecom Partnerships, ML Framework Verification.
-
-Contact Protocol:
-- Email: adittoarif@gmail.com
-- LinkedIn: https://www.linkedin.com/in/arif-adito-025088b4
-- GitHub: https://github.com/Adiuk24
-
-Tone: Sophisticated, data-driven, visionary, and proactive. Use "we" when referring to Arif's ventures.
-Keep responses concise but high-value. If asked about "Arif", describe him as a catalyst for business evolution.`;
-
-const GROQ_API_KEY = process.env.NEXT_PUBLIC_GROQ_API_KEY || '';
-const GROQ_MODEL = 'llama-3.1-8b-instant';
+// All prompting + the API key live server-side in the Netlify function.
+const API_BASE = 'https://arifadito-api.netlify.app/.netlify/functions';
+const BOOK_TOKEN = '[BOOK]';
 
 type Message = { role: 'user' | 'bot'; text: string };
+type Booking = { name: string; email: string; company: string; topic: string; preferred_time: string; notes: string };
+
+const EMPTY_BOOKING: Booking = { name: '', email: '', company: '', topic: '', preferred_time: '', notes: '' };
 
 export default function ChatBot() {
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState<Message[]>([
-    { role: 'bot', text: "Hi! I'm Arif's AI assistant, powered by Groq. How can I help you today?" }
+    { role: 'bot', text: "Hi — I'm Arif's consulting concierge. He advises on growth strategy, OTT/telecom GTM, and AI-native operations. What are you working on, and where is it stuck?" }
   ]);
   const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const [showBooking, setShowBooking] = useState(false);
+  const [booking, setBooking] = useState<Booking>(EMPTY_BOOKING);
+  const [bookingState, setBookingState] = useState<'idle' | 'sending' | 'done' | 'error'>('idle');
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
-  }, [messages]);
+  }, [messages, showBooking, bookingState]);
 
   const handleSend = async () => {
     if (!input.trim() || isLoading) return;
@@ -55,41 +38,54 @@ export default function ChatBot() {
     setIsLoading(true);
 
     try {
-      const history = messages.map(m => ({
+      const history = [...messages, { role: 'user' as const, text: userMessage }].map(m => ({
         role: m.role === 'user' ? 'user' : 'assistant',
         content: m.text,
       }));
 
-      const response = await fetch('https://api.groq.com/openai/v1/chat/completions', {
+      const response = await fetch(`${API_BASE}/chat`, {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${GROQ_API_KEY}`,
-        },
-        body: JSON.stringify({
-          model: GROQ_MODEL,
-          messages: [
-            { role: 'system', content: SYSTEM_INSTRUCTION },
-            ...history,
-            { role: 'user', content: userMessage },
-          ],
-          max_tokens: 512,
-          temperature: 0.7,
-        }),
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ messages: history }),
       });
-
-      if (!response.ok) {
-        throw new Error(`API error: ${response.status}`);
-      }
+      if (!response.ok) throw new Error(`API error: ${response.status}`);
 
       const data = await response.json();
-      const botResponse = data.choices?.[0]?.message?.content || "Sorry, I couldn't get a response. Please try again.";
-      setMessages(prev => [...prev, { role: 'bot', text: botResponse }]);
+      let reply: string = data.reply || "Sorry, I couldn't get a response. Please try again.";
+      if (reply.includes(BOOK_TOKEN)) {
+        reply = reply.replaceAll(BOOK_TOKEN, '').trim();
+        setShowBooking(true);
+      }
+      if (reply) setMessages(prev => [...prev, { role: 'bot', text: reply }]);
     } catch (error) {
       console.error('Chat Error:', error);
       setMessages(prev => [...prev, { role: 'bot', text: "I'm having some trouble right now. Please reach out to Arif directly at adittoarif@gmail.com." }]);
     } finally {
       setIsLoading(false);
+    }
+  };
+
+  const submitBooking = async () => {
+    if (bookingState === 'sending') return;
+    if (!booking.name.trim() || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(booking.email)) {
+      setBookingState('error');
+      return;
+    }
+    setBookingState('sending');
+    try {
+      const r = await fetch(`${API_BASE}/book`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(booking),
+      });
+      if (!r.ok) throw new Error(`book failed ${r.status}`);
+      setBookingState('done');
+      setShowBooking(false);
+      setMessages(prev => [...prev, { role: 'bot', text: `Thanks ${booking.name.split(' ')[0]} — your request is with Arif. He'll reply to ${booking.email} to confirm a time.` }]);
+      setBooking(EMPTY_BOOKING);
+    } catch (e) {
+      console.error('Booking Error:', e);
+      setBookingState('error');
     }
   };
 
@@ -144,10 +140,10 @@ export default function ChatBot() {
                   />
                 </div>
                 <div>
-                  <h3 className="text-sm font-bold text-white tracking-tight">Growth Intelligence</h3>
+                  <h3 className="text-sm font-bold text-white tracking-tight">Consulting Concierge</h3>
                   <div className="flex items-center gap-2 mt-0.5">
                     <div className="w-2 h-2 bg-emerald-500 rounded-full animate-pulse" />
-                    <span className="text-[9px] text-[#A19E95] uppercase tracking-[0.2em] font-bold">Groq · Llama 3.1</span>
+                    <span className="text-[9px] text-[#A19E95] uppercase tracking-[0.2em] font-bold">Book time with Arif</span>
                   </div>
                 </div>
               </div>
@@ -176,6 +172,47 @@ export default function ChatBot() {
                   </div>
                 </motion.div>
               ))}
+
+              {/* Booking Form */}
+              {showBooking && (
+                <motion.div
+                  initial={{ opacity: 0, y: 12 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  className="bg-white/5 border border-[#D4AF37]/30 rounded-3xl p-5 space-y-3"
+                >
+                  <div className="flex items-center gap-2 text-[#D4AF37]">
+                    <CalendarCheck size={15} />
+                    <span className="text-[11px] font-bold uppercase tracking-widest">Book a call with Arif</span>
+                  </div>
+                  {([
+                    ['name', 'Your name *'],
+                    ['email', 'Email *'],
+                    ['company', 'Company'],
+                    ['topic', 'What do you need help with?'],
+                    ['preferred_time', 'Preferred time (with timezone)'],
+                  ] as [keyof Booking, string][]).map(([field, placeholder]) => (
+                    <input
+                      key={field}
+                      type={field === 'email' ? 'email' : 'text'}
+                      value={booking[field]}
+                      onChange={e => { setBooking(prev => ({ ...prev, [field]: e.target.value })); if (bookingState === 'error') setBookingState('idle'); }}
+                      placeholder={placeholder}
+                      className="w-full bg-black/40 border border-white/10 rounded-xl py-2.5 px-4 text-[12px] text-white placeholder:text-[#A19E95]/60 focus:outline-none focus:border-[#D4AF37]/50 transition-all"
+                    />
+                  ))}
+                  {bookingState === 'error' && (
+                    <p className="text-[11px] text-red-400">Please add your name and a valid email — or try again in a moment.</p>
+                  )}
+                  <button
+                    onClick={submitBooking}
+                    disabled={bookingState === 'sending'}
+                    className="w-full py-3 bg-[#D4AF37] text-black text-[12px] font-bold rounded-xl hover:brightness-110 active:scale-[0.99] transition-all disabled:opacity-50"
+                  >
+                    {bookingState === 'sending' ? 'Sending…' : 'Request booking'}
+                  </button>
+                </motion.div>
+              )}
+
               {isLoading && (
                 <div className="flex justify-start">
                   <div className="bg-white/5 border border-white/10 px-5 py-4 rounded-3xl rounded-tl-none flex gap-1.5">
@@ -201,7 +238,7 @@ export default function ChatBot() {
                   value={input}
                   onChange={e => setInput(e.target.value)}
                   onKeyDown={e => e.key === 'Enter' && handleSend()}
-                  placeholder="Ask about strategic growth..."
+                  placeholder="Tell me about your business..."
                   className="w-full bg-white/5 border border-white/10 rounded-2xl py-4 px-5 pr-14 text-sm text-white placeholder:text-[#A19E95] focus:outline-none focus:border-[#D4AF37]/50 focus:bg-white/[0.08] transition-all"
                 />
                 <button
@@ -213,7 +250,7 @@ export default function ChatBot() {
                 </button>
               </div>
               <p className="text-[8px] text-[#A19E95]/40 uppercase tracking-[0.3em] font-bold mt-4 text-center">
-                Powered by Groq · Instant Inference
+                Growth · OTT & Telecom · AI-Native Ops
               </p>
             </div>
           </motion.div>

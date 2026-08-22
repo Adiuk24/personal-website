@@ -7,3 +7,6 @@ coverage/
 !.env.example
 .env.local
 out/
+
+# Local Netlify folder
+.netlify
