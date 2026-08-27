@@ -2,15 +2,7 @@
 
 import { motion, useScroll, useTransform } from 'motion/react';
 import Image from 'next/image';
-import dynamic from 'next/dynamic';
 import { useRef } from 'react';
-
-// WebGL is client-only and heavy; keep it out of the static export and the
-// initial bundle, and let it stream in when the section is reached.
-const CareerGlobe = dynamic(() => import('./CareerGlobe'), {
-  ssr: false,
-  loading: () => <div className="w-full h-[420px] md:h-[560px]" />,
-});
 
 // Every figure below is Arif's own, as published on his LinkedIn profile.
 // Nothing here is estimated or invented.
@@ -204,21 +196,6 @@ export default function Journey() {
         <ChapterBlock key={c.no} chapter={c} index={i} />
       ))}
 
-      <div className="max-w-6xl mx-auto px-6 py-24 md:py-32">
-        <div className="max-w-2xl space-y-5 mb-8">
-          <span className="font-mono text-[10px] uppercase tracking-[0.35em] text-[#F27D26]">
-            Where the work landed
-          </span>
-          <h3 className="text-4xl md:text-6xl font-serif font-light text-white tracking-tight">
-            Four countries, one route<span className="text-[#F27D26]">.</span>
-          </h3>
-          <p className="text-[#A19E95] font-light leading-relaxed">
-            Dhaka to London, out across the Gulf, and home again — every marker is a market he
-            actually sold into or ran a business in.
-          </p>
-        </div>
-        <CareerGlobe />
-      </div>
     </section>
   );
 }
