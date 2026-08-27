@@ -1,7 +1,6 @@
 'use client';
 
 import { motion, useScroll, useTransform } from 'motion/react';
-import Image from 'next/image';
 import { useRef } from 'react';
 
 // Every figure below is Arif's own, as published on his LinkedIn profile.
@@ -115,15 +114,18 @@ function ChapterBlock({ chapter, index }: { chapter: Chapter; index: number }) {
     <div ref={ref} className="relative min-h-screen flex items-center py-24 md:py-32">
       {/* Plate */}
       <motion.div style={{ y: plateY }} className="absolute inset-0 overflow-hidden opacity-60">
-        <Image
+        {/* eslint-disable-next-line @next/next/no-img-element -- static export can't
+            optimise next/image, so a hand-rolled srcset is the only way to stop
+            mobile downloading the 1920px plate. */}
+        <img
           src={chapter.plate}
+          srcSet={`${chapter.plate.replace('.jpg', '-sm.jpg')} 960w, ${chapter.plate} 1920w`}
+          sizes="100vw"
           alt=""
           aria-hidden="true"
-          fill
-          sizes="100vw"
-          className="object-cover"
+          className="absolute inset-0 w-full h-full object-cover"
           loading={index === 0 ? 'eager' : 'lazy'}
-          unoptimized
+          decoding="async"
         />
       </motion.div>
       <div className="absolute inset-0 bg-gradient-to-r from-black via-black/75 to-black/20" />

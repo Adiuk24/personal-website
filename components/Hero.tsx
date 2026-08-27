@@ -34,7 +34,7 @@ export default function Hero() {
             <motion.span
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
-              transition={{ duration: 1 }}
+              transition={{ duration: 0.4 }}
               className="text-[12px] uppercase tracking-[0.6em] text-[#A19E95] font-semibold block"
             >
               Business Growth Leader
@@ -42,7 +42,7 @@ export default function Hero() {
             <motion.h1
               initial={{ opacity: 0, y: 40 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
+              transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
               className="text-6xl md:text-8xl font-serif font-light leading-[1.1] tracking-tight text-white"
             >
               Arif <span className="text-gradient">Adito.</span>
@@ -52,7 +52,7 @@ export default function Hero() {
           <motion.p
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1, delay: 0.3 }}
+            transition={{ duration: 0.45, delay: 0.1 }}
             className="text-lg md:text-xl text-[#A19E95] max-w-2xl mx-auto font-light leading-relaxed"
           >
             Scaling startups into market leaders across SaaS, OTT, and Fintech with 15+ years of strategic impact.
@@ -61,7 +61,7 @@ export default function Hero() {
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1, delay: 0.5 }}
+            transition={{ duration: 0.45, delay: 0.18 }}
             className="flex flex-wrap justify-center gap-8 pt-4"
           >
             <a
@@ -83,7 +83,7 @@ export default function Hero() {
         <motion.div
           initial={{ opacity: 0, y: 60 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1.5, delay: 0.6, ease: [0.16, 1, 0.3, 1] }}
+          transition={{ duration: 0.5, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
           className="grid grid-cols-1 md:grid-cols-[minmax(0,330px)_1fr] gap-12 md:gap-16 items-center max-w-4xl mx-auto text-left"
         >
           {/* Source portrait is 384x460 — the frame matches it exactly so nothing crops. */}
