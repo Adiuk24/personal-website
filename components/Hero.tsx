@@ -40,8 +40,8 @@ export default function Hero() {
               Business Growth Leader
             </motion.span>
             <motion.h1
-              initial={{ opacity: 0, y: 40 }}
-              animate={{ opacity: 1, y: 0 }}
+              initial={{ y: 24 }}
+              animate={{ y: 0 }}
               transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
               className="text-6xl md:text-8xl font-serif font-light leading-[1.1] tracking-tight text-white"
             >
@@ -81,8 +81,8 @@ export default function Hero() {
         </motion.div>
 
         <motion.div
-          initial={{ opacity: 0, y: 60 }}
-          animate={{ opacity: 1, y: 0 }}
+          initial={{ y: 32 }}
+          animate={{ y: 0 }}
           transition={{ duration: 0.5, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
           className="grid grid-cols-1 md:grid-cols-[minmax(0,330px)_1fr] gap-12 md:gap-16 items-center max-w-4xl mx-auto text-left"
         >
