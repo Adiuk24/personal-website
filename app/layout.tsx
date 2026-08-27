@@ -68,7 +68,6 @@ export default function RootLayout({children}: {children: React.ReactNode}) {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-        <link rel="icon" href="/favicon.ico" />
       </head>
       <body className="bg-[#050505] text-[#F5F2ED] antialiased selection:bg-[#F27D26] selection:text-white" suppressHydrationWarning>
         {children}

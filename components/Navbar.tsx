@@ -16,14 +16,16 @@ export default function Navbar() {
     });
   }, [scrollY]);
 
+  // Root-relative so section links still work from /journey and /research,
+  // where a bare "#about" would just append a dead hash to the current page.
   const navLinks = [
-    { name: 'About', href: '#about' },
-    { name: 'Experience', href: '#experience' },
+    { name: 'About', href: '/#about' },
+    { name: 'Experience', href: '/#experience' },
     { name: 'Journey', href: '/journey' },
-    { name: 'Ventures', href: '#ventures' },
-    { name: 'Projects', href: '#projects' },
+    { name: 'Ventures', href: '/#ventures' },
+    { name: 'Projects', href: '/#projects' },
     { name: 'Research', href: '/research' },
-    { name: 'Contact', href: '#contact' },
+    { name: 'Contact', href: '/#contact' },
   ];
 
   return (
