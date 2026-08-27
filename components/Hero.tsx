@@ -84,17 +84,37 @@ export default function Hero() {
           initial={{ opacity: 0, y: 60 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1.5, delay: 0.6, ease: [0.16, 1, 0.3, 1] }}
-          className="relative aspect-[16/9] w-full max-w-5xl mx-auto rounded-3xl overflow-hidden border border-white/10"
+          className="grid grid-cols-1 md:grid-cols-[minmax(0,330px)_1fr] gap-12 md:gap-16 items-center max-w-4xl mx-auto text-left"
         >
-          <Image
-            src="/hero-bg.png"
-            alt="Strategic Growth & Leadership"
-            fill
-            className="object-cover grayscale hover:grayscale-0 transition-all duration-1000"
-            referrerPolicy="no-referrer"
-            unoptimized
-          />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
+          {/* Source portrait is 384x460 — the frame matches it exactly so nothing crops. */}
+          <div className="relative aspect-[384/460] w-full max-w-[330px] mx-auto md:mx-0 rounded-3xl overflow-hidden border border-white/10">
+            <Image
+              src="/arif-portrait.jpg"
+              alt="Portrait of Arif Adito"
+              fill
+              sizes="330px"
+              className="object-cover"
+              priority
+              unoptimized
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent" />
+          </div>
+
+          <div className="space-y-6">
+            <p className="text-[#A19E95] text-base md:text-lg font-light leading-relaxed">
+              I run Bangladesh for <span className="text-white">tapmad</span> — building an OTT business from 0→1 in one
+              of the world&apos;s most price-sensitive streaming markets: go-to-market, telco and payment partnerships,
+              and the recurring-revenue engine behind them.
+            </p>
+            <p className="text-[#A19E95] text-base md:text-lg font-light leading-relaxed">
+              Fifteen years across OTT, SaaS, Fintech and Telecom — UAE, MENA, APAC and the UK. And I build with AI
+              rather than talk about it: I pretrained a Bangla-focused language model end-to-end in Rust for $164, then
+              published what broke.
+            </p>
+            <p className="text-[10px] uppercase tracking-[0.4em] text-white/30 font-mono">
+              Dhaka, Bangladesh
+            </p>
+          </div>
         </motion.div>
       </div>
 
