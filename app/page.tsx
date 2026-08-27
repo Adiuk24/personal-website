@@ -1,6 +1,6 @@
 import Navbar from '@/components/Navbar';
 import Hero from '@/components/Hero';
-import Experience from '@/components/Experience';
+import Journey from '@/components/Journey';
 import Innovation from '@/components/Innovation';
 import FeaturedResearch from '@/components/FeaturedResearch';
 import Projects from '@/components/Projects';
@@ -14,7 +14,7 @@ export default function Home() {
     <main className="relative overflow-x-hidden bg-black">
       <Navbar />
       <Hero />
-      <Experience />
+      <Journey />
       <Innovation />
       <Projects />
       <FeaturedResearch />

@@ -72,7 +72,7 @@ export default function Hero() {
               <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
             </a>
             <a
-              href="#experience"
+              href="#journey"
               className="text-[#A19E95] font-semibold hover:text-white transition-colors"
             >
               View Impact
