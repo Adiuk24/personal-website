@@ -2,7 +2,15 @@
 
 import { motion, useScroll, useTransform } from 'motion/react';
 import Image from 'next/image';
+import dynamic from 'next/dynamic';
 import { useRef } from 'react';
+
+// WebGL is client-only and heavy; keep it out of the static export and the
+// initial bundle, and let it stream in when the section is reached.
+const CareerGlobe = dynamic(() => import('./CareerGlobe'), {
+  ssr: false,
+  loading: () => <div className="w-full h-[420px] md:h-[560px]" />,
+});
 
 // Every figure below is Arif's own, as published on his LinkedIn profile.
 // Nothing here is estimated or invented.
@@ -19,73 +27,6 @@ type Chapter = {
 const CHAPTERS: Chapter[] = [
   {
     no: '01',
-    years: '2008 — 2021',
-    place: 'Dhaka, Bangladesh',
-    title: 'Origin',
-    body:
-      'A cadet in the Bangladesh National Cadet Corps at sixteen — still enrolled eighteen years later. Coordinating exam venues for the British Council. Then telecom: an IVR platform at Joycalls that reached users across twelve countries and put him on national television explaining why accessibility mattered more than scale.',
-    facts: [
-      { value: '12', label: 'countries reached' },
-      { value: '18 yrs', label: 'BNCC service' },
-    ],
-    plate: '/journey/01-origin.jpg',
-  },
-  {
-    no: '02',
-    years: '2022 — 2025',
-    place: 'London, United Kingdom',
-    title: 'Proving Ground',
-    body:
-      'Two months at Nuffield Health delivering 45% month-on-month growth was enough to move to GlobalData, where he ran delegate acquisition across more than fifteen international events. Later, market expansion and franchise partnerships for VBITES, one of the UK’s largest plant-based food companies.',
-    facts: [
-      { value: '15+', label: 'international events' },
-      { value: '+30%', label: 'delegate engagement' },
-      { value: '+25%', label: 'conversion rate' },
-    ],
-    plate: '/journey/02-london.jpg',
-  },
-  {
-    no: '03',
-    years: '2022 — 2023',
-    place: 'UAE · Saudi Arabia · Qatar · Egypt',
-    title: 'The Gulf',
-    body:
-      'The campaign that defines the commercial track. Building B2B sales across MENA meant adapting to regional business culture rather than exporting a playbook — negotiating multi-million-dollar contracts with banks, telecoms and government clients, and rebuilding the funnel around how those deals actually close.',
-    facts: [
-      { value: '400%', label: 'revenue growth in 2 years' },
-      { value: '12', label: 'partnerships established' },
-      { value: '−35%', label: 'sales cycle length' },
-    ],
-    plate: '/journey/03-gulf.jpg',
-  },
-  {
-    no: '04',
-    years: '2022 — 2025',
-    place: 'London, United Kingdom',
-    title: 'Studio By Adi',
-    body:
-      'Founded and ran a creative agency alongside the commercial work — director of photography on cinematic shoots for hospitality, nightlife and luxury brands. Sony, RED, ARRI. The eye trained here is the reason this site looks the way it does.',
-    facts: [
-      { value: '+250%', label: 'audience engagement' },
-      { value: '3 yrs', label: 'founder & DOP' },
-    ],
-    plate: '/journey/04-studio.jpg',
-  },
-  {
-    no: '05',
-    years: '2025 — now',
-    place: 'Dhaka, Bangladesh',
-    title: 'The Return',
-    body:
-      'Back home to build tapmad’s Bangladesh business from zero: go-to-market, MNO and ISP distribution, payments across bKash, Nagad and carrier billing, and BTRC compliance. The hard part was not acquisition — it was moving one of the world’s most price-sensitive markets from one-off event purchases to auto-renewing subscriptions, then raising price mid-growth without breaking the curve.',
-    facts: [
-      { value: '0 → 1', label: 'market built' },
-      { value: 'MAU · ARPU · churn', label: 'owned end to end' },
-    ],
-    plate: '/journey/05-return.jpg',
-  },
-  {
-    no: '06',
     years: '2026',
     place: 'Nights and weekends',
     title: 'The Build',
@@ -97,6 +38,75 @@ const CHAPTERS: Chapter[] = [
       { value: '2', label: 'papers published' },
     ],
     plate: '/journey/06-build.jpg',
+  },
+  {
+    no: '02',
+    years: '2025 — now',
+    place: 'tapmad · Dhaka, Bangladesh',
+    title: 'The Return',
+    body:
+      'Back home to build tapmad’s Bangladesh business from zero: go-to-market, MNO and ISP distribution, payments across bKash, Nagad and carrier billing, and BTRC compliance. The hard part was never acquisition — it was moving one of the world’s most price-sensitive markets from one-off event purchases to auto-renewing subscriptions, then raising price mid-growth without breaking the curve.',
+    facts: [
+      { value: '0 → 1', label: 'market built' },
+      { value: 'MAU · ARPU · churn', label: 'owned end to end' },
+    ],
+    plate: '/journey/05-return.jpg',
+  },
+  {
+    no: '03',
+    years: '2022 — 2024',
+    place: 'London, United Kingdom',
+    title: 'Starting Over Abroad',
+    body:
+      'Leaving a managing directorship to start again in a new market. Two months at Nuffield Health delivering 45% month-on-month growth, then GlobalData, running delegate acquisition across more than fifteen high-profile international events and rebuilding the funnel with marketing, sales and production working off the same numbers.',
+    facts: [
+      { value: '15+', label: 'international events' },
+      { value: '+30%', label: 'delegate engagement' },
+      { value: '+25%', label: 'conversion rate' },
+    ],
+    plate: '/journey/03-london.jpg',
+  },
+  {
+    no: '04',
+    years: '2022 — 2023',
+    place: 'UAE · Saudi Arabia · Qatar · Egypt',
+    title: 'The Gulf',
+    body:
+      'The campaign that defines the commercial track. Scaling B2B sales across MENA meant adapting to regional business culture rather than exporting a playbook — building alliances with local banks, telecoms and enterprises, and rebuilding the funnel around how those deals actually close.',
+    facts: [
+      { value: '400%', label: 'revenue growth in 2 years' },
+      { value: '12', label: 'partnerships established' },
+      { value: '−35%', label: 'sales cycle length' },
+    ],
+    plate: '/journey/04-gulf.jpg',
+  },
+  {
+    no: '05',
+    years: '2017 — 2022',
+    place: 'Joycalls Group · Dhaka',
+    title: 'Managing Director',
+    body:
+      'Five years running the Bangladesh office of a telecom and ad-tech group — the role that turned a salesman into an operator. Negotiated twelve platform contracts across five categories of telecom software, carried a portfolio of twelve projects to completion, built and trained the team that delivered them, and took offshore software sales into three countries.',
+    facts: [
+      { value: '5 yrs', label: 'as Managing Director' },
+      { value: '+50%', label: 'sales growth' },
+      { value: '12', label: 'platform contracts' },
+    ],
+    plate: '/journey/02-joycalls.jpg',
+  },
+  {
+    no: '06',
+    years: '2010 — 2017',
+    place: 'Dhaka, Bangladesh',
+    title: 'Learning the Trade',
+    body:
+      'Event coordination and brand activations first — ATN, GMS, then marketing for a textile manufacturer. The commercial career proper starts at everjobs Bangladesh, moving from business development to Deputy Manager to Manager of Corporate Sales to Head of Corporate Sales in barely two years, running fifteen sales teams across three time zones and pushing the company into APAC markets.',
+    facts: [
+      { value: '+80%', label: 'lead generation' },
+      { value: '15', label: 'sales teams, 3 time zones' },
+      { value: '+48%', label: 'referral business' },
+    ],
+    plate: '/journey/01-origin.jpg',
   },
 ];
 
@@ -182,16 +192,33 @@ export default function Journey() {
           viewport={{ once: true }}
           className="text-5xl md:text-7xl font-serif font-light tracking-tight text-white max-w-3xl"
         >
-          Dhaka to London to the Gulf<span className="text-[#F27D26]">.</span> And back<span className="text-[#F27D26]">.</span>
+          Where he is now<span className="text-[#F27D26]">.</span> And how he got here<span className="text-[#F27D26]">.</span>
         </motion.h2>
         <p className="text-[#A19E95] text-lg font-light max-w-xl">
-          Fifteen years, four countries, and one throughline: build the thing where nobody had built it before.
+          Read backwards from today: Dhaka, the Gulf, London, and the fifteen years in Bangladesh
+          that came before any of it.
         </p>
       </div>
 
       {CHAPTERS.map((c, i) => (
         <ChapterBlock key={c.no} chapter={c} index={i} />
       ))}
+
+      <div className="max-w-6xl mx-auto px-6 py-24 md:py-32">
+        <div className="max-w-2xl space-y-5 mb-8">
+          <span className="font-mono text-[10px] uppercase tracking-[0.35em] text-[#F27D26]">
+            Where the work landed
+          </span>
+          <h3 className="text-4xl md:text-6xl font-serif font-light text-white tracking-tight">
+            Four countries, one route<span className="text-[#F27D26]">.</span>
+          </h3>
+          <p className="text-[#A19E95] font-light leading-relaxed">
+            Dhaka to London, out across the Gulf, and home again — every marker is a market he
+            actually sold into or ran a business in.
+          </p>
+        </div>
+        <CareerGlobe />
+      </div>
     </section>
   );
 }
