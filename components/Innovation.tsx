@@ -1,7 +1,7 @@
 'use client';
 
 import { motion } from 'motion/react';
-import { ExternalLink, Camera, Brain, Cpu, Sparkles } from 'lucide-react';
+import { ExternalLink, Brain, Cpu, Sparkles } from 'lucide-react';
 
 const ventures = [
   {
@@ -11,14 +11,6 @@ const ventures = [
     icon: <Cpu className="text-[#F27D26]" />,
     type: 'Venture',
     highlights: ['AI Solutions', 'Digital Transformation', 'Strategic Consulting']
-  },
-  {
-    title: 'Studio By Adi',
-    description: 'London-based creative agency delivering high-end commercial photography and cinematic storytelling for luxury brands globally.',
-    link: 'https://studiobyadi.com',
-    icon: <Camera className="text-[#F27D26]" />,
-    type: 'Venture',
-    highlights: ['Cinematic Production', 'Brand Storytelling', 'Luxury F&B']
   },
   {
     title: 'LLM & Systems Research',
