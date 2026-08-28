@@ -1,7 +1,8 @@
 'use client';
 
 import { motion } from 'motion/react';
-import { Award, CheckCircle2 } from 'lucide-react';
+import { useState } from 'react';
+import { Award, CheckCircle2, ChevronDown } from 'lucide-react';
 
 // Synced from LinkedIn (linkedin.com/in/arif-adito-025088b4) — Aug 2026.
 // Google PM specialization course certificates are folded into the specialization entry.
@@ -78,6 +79,48 @@ const groups: { label: string; certs: { title: string; issuer: string; date?: st
   },
 ];
 
+
+// The full directory ran to ~5,000px on a phone. Groups collapse under md.
+function CertGroup({ group }: { group: { label: string; certs: { title: string; issuer: string; date?: string }[] } }) {
+  const [open, setOpen] = useState(false);
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      className="space-y-6"
+    >
+      <button
+        type="button"
+        onClick={() => setOpen(o => !o)}
+        aria-expanded={open}
+        className="w-full flex items-center justify-between gap-3 border-b border-white/10 pb-4 md:cursor-default"
+      >
+        <h3 className="text-[10px] uppercase tracking-[0.3em] text-[#F27D26] font-mono text-left">
+          {group.label}
+        </h3>
+        <span className="flex items-center gap-2 md:hidden">
+          <span className="text-[10px] font-mono text-white/30">{group.certs.length}</span>
+          <ChevronDown size={16} className={`text-[#A19E95] transition-transform ${open ? 'rotate-180' : ''}`} />
+        </span>
+      </button>
+      <ul className={`space-y-4 ${open ? 'block' : 'hidden md:block'}`}>
+        {group.certs.map((cert) => (
+          <li key={cert.title} className="flex items-baseline justify-between gap-4">
+            <div>
+              <p className="text-sm text-white font-light leading-snug">{cert.title}</p>
+              <p className="text-xs text-[#A19E95] font-light">{cert.issuer}</p>
+            </div>
+            {cert.date && (
+              <span className="text-[10px] font-mono text-white/30 whitespace-nowrap">{cert.date}</span>
+            )}
+          </li>
+        ))}
+      </ul>
+    </motion.div>
+  );
+}
+
 export default function Certifications() {
   return (
     <section id="certifications" className="py-32 px-6 bg-black">
@@ -145,30 +188,7 @@ export default function Certifications() {
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-12 gap-y-16">
           {groups.map((group) => (
-            <motion.div
-              key={group.label}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              className="space-y-6"
-            >
-              <h3 className="text-[10px] uppercase tracking-[0.3em] text-[#F27D26] font-mono border-b border-white/10 pb-4">
-                {group.label}
-              </h3>
-              <ul className="space-y-4">
-                {group.certs.map((cert) => (
-                  <li key={cert.title} className="flex items-baseline justify-between gap-4">
-                    <div>
-                      <p className="text-sm text-white font-light leading-snug">{cert.title}</p>
-                      <p className="text-xs text-[#A19E95] font-light">{cert.issuer}</p>
-                    </div>
-                    {cert.date && (
-                      <span className="text-[10px] font-mono text-white/30 whitespace-nowrap">{cert.date}</span>
-                    )}
-                  </li>
-                ))}
-              </ul>
-            </motion.div>
+            <CertGroup key={group.label} group={group} />
           ))}
         </div>
       </div>

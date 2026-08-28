@@ -3,6 +3,7 @@
 import { motion, useScroll } from 'motion/react';
 import { Linkedin, Github, Menu, X } from 'lucide-react';
 import { useState, useEffect } from 'react';
+import Link from 'next/link';
 import Logo from './Logo';
 
 export default function Navbar() {
@@ -35,7 +36,11 @@ export default function Navbar() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
         >
-          <Logo />
+          {/* The lockup looked clickable but wasn't — on mobile it was the only
+              plausible way home, and it did nothing. */}
+          <Link href="/" aria-label="Arif Adito — home">
+            <Logo />
+          </Link>
         </motion.div>
 
         {/* Desktop Nav - Centered */}

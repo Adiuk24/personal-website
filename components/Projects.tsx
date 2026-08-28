@@ -210,7 +210,7 @@ export default function Projects() {
               whileInView={{ opacity: 1, y: 0 }}
               className="text-5xl md:text-7xl font-serif font-light tracking-tight text-white"
             >
-              Products &amp; research<span className="text-[#F27D26]">.</span>
+              What I&apos;m building<span className="text-[#F27D26]">.</span>
             </motion.h2>
           </div>
           <p className="text-[#A19E95] text-lg max-w-md font-light leading-relaxed">
@@ -226,7 +226,7 @@ export default function Projects() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: i * 0.1, duration: 0.8 }}
-              className="group p-10 glass rounded-[48px] border border-white/5 hover:border-[#F27D26]/20 transition-all duration-700 space-y-6"
+              className="group p-7 md:p-10 glass rounded-[36px] md:rounded-[48px] border border-white/5 hover:border-[#F27D26]/20 transition-all duration-700 space-y-5 md:space-y-6"
             >
               <div className="flex justify-between items-center">
                 <StatusChip status={p.status} note={p.statusNote} />
@@ -259,12 +259,12 @@ export default function Projects() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: i * 0.05, duration: 0.6 }}
-              className="group p-8 glass rounded-[32px] border border-white/5 hover:border-[#F27D26]/20 transition-all duration-500 flex flex-col justify-between gap-6 min-h-[240px]"
+              className="group p-6 md:p-8 glass rounded-[28px] md:rounded-[32px] border border-white/5 hover:border-[#F27D26]/20 transition-all duration-500 flex flex-col justify-between gap-4 md:gap-6 md:min-h-[240px]"
             >
               <div className="space-y-4">
                 <StatusChip status={p.status} note={p.statusNote} />
                 <h3 className="text-2xl font-serif font-bold text-white group-hover:text-[#F27D26] transition-colors duration-500">{p.name}</h3>
-                <p className="text-[#A19E95] font-light leading-relaxed text-sm">{p.tagline}</p>
+                <p className="text-[#A19E95] font-light leading-relaxed text-sm line-clamp-3 md:line-clamp-none">{p.tagline}</p>
               </div>
               <div className="flex justify-between items-center border-t border-white/10 pt-4">
                 <ActivityLine project={p} activity={activity} />
