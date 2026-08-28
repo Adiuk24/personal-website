@@ -9,7 +9,6 @@ export type ResearchPost = {
   subtitle: string;
   date: string;        // ISO, for <time> and sorting
   displayDate: string;
-  readingTime: string;
   words: number;
   citations: number;
   tags: string[];
@@ -26,7 +25,6 @@ export const RESEARCH_POSTS: ResearchPost[] = [
       'A market map of every product claiming to keep source code private from AI coding assistants — and the five-property intersection none of them occupy.',
     date: '2026-08-28',
     displayDate: 'August 2026',
-    readingTime: '42 min',
     words: 10663,
     citations: 85,
     tags: ['AI Privacy', 'Coding Agents', 'Regulatory', 'Market Analysis'],

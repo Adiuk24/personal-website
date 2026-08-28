@@ -54,8 +54,6 @@ export default function PublishedResearch() {
                     <div className="flex flex-wrap items-center gap-x-3 gap-y-1 font-mono text-[10px] uppercase tracking-[0.25em] text-white/40">
                       <span>{post.displayDate}</span>
                       <span>·</span>
-                      <span>{post.readingTime}</span>
-                      <span>·</span>
                       <span className="text-[#F27D26]">{post.citations} sources</span>
                     </div>
 

@@ -60,8 +60,6 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
           <div className="flex flex-wrap items-center gap-x-4 gap-y-2 font-mono text-[10px] uppercase tracking-[0.25em] text-white/40">
             <time dateTime={post.date}>{post.displayDate}</time>
             <span>·</span>
-            <span>{post.readingTime}</span>
-            <span>·</span>
             <span>{post.words.toLocaleString()} words</span>
             <span>·</span>
             <span className="text-[#F27D26]">{post.citations} sources</span>
@@ -84,7 +82,7 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
           </div>
 
           <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-white/30">
-            Self-published · not peer reviewed
+            Published by Arif Adito
           </p>
         </header>
 
