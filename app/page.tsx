@@ -3,6 +3,7 @@ import Hero from '@/components/Hero';
 import Experience from '@/components/Experience';
 import Innovation from '@/components/Innovation';
 import FeaturedResearch from '@/components/FeaturedResearch';
+import PublishedResearch from '@/components/PublishedResearch';
 import Projects from '@/components/Projects';
 import Certifications from '@/components/Certifications';
 import News from '@/components/News';
@@ -17,6 +18,7 @@ export default function Home() {
       <Experience />
       <Innovation />
       <Projects />
+      <PublishedResearch />
       <FeaturedResearch />
       <Certifications />
       <News />
