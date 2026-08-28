@@ -19,11 +19,24 @@ export default function ChatBot() {
   const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [showBooking, setShowBooking] = useState(false);
+  const [showNudge, setShowNudge] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [messages, showBooking]);
+
+  // Surface the label shortly after load, once per session, so it reads as a
+  // hint rather than a permanent banner covering the page.
+  useEffect(() => {
+    if (sessionStorage.getItem('assistant-nudge-seen')) return;
+    const show = setTimeout(() => setShowNudge(true), 2500);
+    const hide = setTimeout(() => {
+      setShowNudge(false);
+      sessionStorage.setItem('assistant-nudge-seen', '1');
+    }, 12000);
+    return () => { clearTimeout(show); clearTimeout(hide); };
+  }, []);
 
   const handleSend = async () => {
     if (!input.trim() || isLoading) return;
@@ -64,6 +77,39 @@ export default function ChatBot() {
 
   return (
     <>
+      {/* A bare lightning bolt told visitors nothing. The nudge names it once,
+          then gets out of the way; the button keeps a permanent accessible name. */}
+      <AnimatePresence>
+        {!isOpen && showNudge && (
+          <motion.div
+            initial={{ opacity: 0, x: 12, scale: 0.95 }}
+            animate={{ opacity: 1, x: 0, scale: 1 }}
+            exit={{ opacity: 0, x: 12, scale: 0.95 }}
+            transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
+            className="fixed bottom-[3.1rem] right-28 md:right-32 z-50 flex items-center gap-2"
+          >
+            <button
+              onClick={() => setIsOpen(true)}
+              className="px-4 py-2.5 rounded-2xl bg-[#111] border border-[#D4AF37]/40 shadow-[0_8px_30px_rgba(0,0,0,0.6)] text-left"
+            >
+              <span className="block text-[13px] text-white font-medium whitespace-nowrap">
+                Ask Arif&apos;s AI assistant
+              </span>
+              <span className="block text-[10px] text-[#A19E95] whitespace-nowrap">
+                Growth, OTT &amp; AI — or book a call
+              </span>
+            </button>
+            <button
+              onClick={() => setShowNudge(false)}
+              aria-label="Dismiss assistant prompt"
+              className="w-6 h-6 rounded-full bg-white/10 text-[#A19E95] hover:text-white flex items-center justify-center shrink-0"
+            >
+              <X size={12} />
+            </button>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
       {/* Floating Button */}
       <motion.button
         initial={{ scale: 0, opacity: 0 }}
@@ -71,7 +117,9 @@ export default function ChatBot() {
         whileHover={{ scale: 1.05 }}
         whileTap={{ scale: 0.95 }}
         onClick={() => setIsOpen(true)}
-        className="fixed bottom-8 right-8 z-50 w-20 h-20 rounded-full shadow-[0_0_50px_rgba(212,175,55,0.3)] flex items-center justify-center cursor-pointer overflow-hidden border-2 border-[#D4AF37] bg-black"
+        aria-label="Ask Arif's AI assistant"
+        title="Ask Arif's AI assistant"
+        className="fixed bottom-8 right-8 z-50 w-16 h-16 md:w-20 md:h-20 rounded-full shadow-[0_0_50px_rgba(212,175,55,0.3)] flex items-center justify-center cursor-pointer overflow-hidden border-2 border-[#D4AF37] bg-black"
       >
         <div className="relative w-full h-full flex items-center justify-center">
           <motion.div
