@@ -25,11 +25,13 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
       type: 'article',
       url: `https://arifadito.com/research/${post.slug}`,
       publishedTime: post.date,
+      images: [{ url: `/og/${post.slug}.png`, width: 1200, height: 630, alt: post.title }],
     },
     twitter: {
       card: 'summary_large_image',
       title: post.title,
       description: post.summary.slice(0, 200),
+      images: [`/og/${post.slug}.png`],
     },
   };
 }

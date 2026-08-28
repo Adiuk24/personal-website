@@ -43,11 +43,13 @@ export const metadata: Metadata = {
     title: 'Arif Adito | Business Growth Leader - SaaS, OTT & Fintech Expert',
     description: 'Strategic leader with 15+ years of experience scaling SaaS, OTT, and Fintech ventures globally.',
     siteName: 'Arif Adito',
+    images: [{ url: '/og/site.png', width: 1200, height: 630, alt: 'Arif Adito — Business Growth Leader' }],
   },
   twitter: {
     card: 'summary_large_image',
     title: 'Arif Adito | Business Growth Leader',
     description: 'Strategic leader scaling SaaS, OTT, and Fintech ventures globally.',
+    images: ['/og/site.png'],
   },
   verification: {
     google: 'Q1U0UL_ObRfoFeSKvShOv8sGXVpYv2bu_4_BtVM_6AU',
