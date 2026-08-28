@@ -33,11 +33,11 @@ export default function News() {
             <span className="text-sm uppercase tracking-[0.4em] text-[#F27D26] font-medium">
               Media & Recognition
             </span>
-            <h2 className="text-5xl md:text-7xl font-serif font-light leading-tight tracking-tight">
+            <h2 className="text-4xl md:text-7xl font-serif font-light leading-tight tracking-tight">
               Making headlines<span className="text-[#F27D26]">.</span>
             </h2>
           </div>
-          <p className="text-[#A19E95] text-lg max-w-md font-light">
+          <p className="text-[#A19E95] text-base md:text-lg max-w-md font-light">
             Recognition and coverage of market expansion milestones and strategic partnerships globally.
           </p>
         </div>

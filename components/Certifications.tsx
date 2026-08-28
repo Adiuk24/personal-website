@@ -136,11 +136,11 @@ export default function Certifications() {
           <motion.h2
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            className="text-5xl md:text-7xl font-serif font-light tracking-tight text-white"
+            className="text-4xl md:text-7xl font-serif font-light tracking-tight text-white"
           >
             Professional Certifications<span className="text-[#F27D26]">.</span>
           </motion.h2>
-          <p className="text-[#A19E95] text-lg font-light">
+          <p className="text-[#A19E95] text-base md:text-lg font-light">
             40+ credentials across product, marketing, AI, data, and leadership —{' '}
             <a
               href="https://www.linkedin.com/in/arif-adito-025088b4/details/certifications/"

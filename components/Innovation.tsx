@@ -40,12 +40,12 @@ export default function Innovation() {
             <motion.h2 
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
-              className="text-5xl md:text-7xl font-serif font-light tracking-tight text-white"
+              className="text-4xl md:text-7xl font-serif font-light tracking-tight text-white"
             >
               Building the future<span className="text-[#F27D26]">.</span>
             </motion.h2>
           </div>
-          <p className="text-[#A19E95] text-lg max-w-md font-light leading-relaxed">
+          <p className="text-[#A19E95] text-base md:text-lg max-w-md font-light leading-relaxed">
             Forging paths in technology, creative excellence, and open-access AI systems research.
           </p>
         </div>
@@ -59,11 +59,11 @@ export default function Innovation() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: i * 0.1, duration: 0.8 }}
-              className="group relative p-7 md:p-10 glass rounded-[48px] border border-white/5 hover:border-[#F27D26]/20 transition-all duration-700 flex flex-col justify-between md:min-h-[500px]"
+              className="group relative p-7 md:p-10 glass rounded-[32px] md:rounded-[48px] border border-white/5 hover:border-[#F27D26]/20 transition-all duration-700 flex flex-col justify-between md:min-h-[500px]"
             >
               <div className="space-y-8">
                 <div className="flex justify-between items-start">
-                  <div className="w-16 h-16 rounded-3xl bg-white/5 flex items-center justify-center group-hover:bg-[#F27D26]/10 transition-all duration-700">
+                  <div className="w-12 h-12 md:w-16 md:h-16 rounded-2xl md:rounded-3xl bg-white/5 flex items-center justify-center group-hover:bg-[#F27D26]/10 transition-all duration-700">
                     {venture.icon}
                   </div>
                   <span className="text-[10px] uppercase tracking-[0.3em] text-[#A19E95] font-bold border border-white/10 px-4 py-2 rounded-full flex items-center gap-1.5">
@@ -73,8 +73,8 @@ export default function Innovation() {
                 </div>
                 
                 <div className="space-y-4">
-                  <h3 className="text-3xl font-serif font-bold text-white group-hover:text-[#F27D26] transition-colors duration-500">{venture.title}</h3>
-                  <p className="text-[#A19E95] font-light leading-relaxed text-lg">
+                  <h3 className="text-2xl md:text-3xl font-serif font-bold text-white group-hover:text-[#F27D26] transition-colors duration-500">{venture.title}</h3>
+                  <p className="text-[#A19E95] font-light leading-relaxed text-base md:text-lg">
                     {venture.description}
                   </p>
                 </div>

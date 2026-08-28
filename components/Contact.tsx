@@ -11,16 +11,16 @@ export default function Contact() {
       <div className="absolute bottom-0 right-0 w-[600px] h-[600px] bg-[#F27D26]/5 rounded-full blur-[120px] -z-10" />
       
       <div className="max-w-7xl mx-auto">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-24 items-center">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 md:gap-24 items-center">
           <div className="space-y-12">
             <div className="space-y-6">
               <span className="text-sm uppercase tracking-[0.4em] text-[#F27D26] font-medium">
                 Get In Touch
               </span>
-              <h2 className="text-6xl md:text-8xl font-serif font-light leading-tight tracking-tight">
+              <h2 className="text-4xl md:text-8xl font-serif font-light leading-tight tracking-tight">
                 Ready to build the future<span className="text-[#F27D26]">.</span>
               </h2>
-              <p className="text-[#A19E95] text-xl max-w-md font-light leading-relaxed">
+              <p className="text-[#A19E95] text-base md:text-xl max-w-md font-light leading-relaxed">
                 Currently exploring high-impact leadership roles in UAE, MENA, and global markets. Let&apos;s catalyze your next phase of growth together.
               </p>
             </div>
@@ -42,7 +42,7 @@ export default function Contact() {
           </div>
 
           <div className="space-y-12">
-            <div id="book" className="p-7 md:p-12 glass rounded-[60px] space-y-6">
+            <div id="book" className="p-7 md:p-12 glass rounded-[32px] md:rounded-[60px] space-y-6">
               <div className="space-y-2">
                 <h3 className="text-3xl font-serif">Book a call</h3>
                 <p className="text-[#A19E95] text-sm font-light">
@@ -52,7 +52,7 @@ export default function Contact() {
               <BookingForm />
             </div>
 
-            <div className="p-7 md:p-12 glass rounded-[60px] space-y-8">
+            <div className="p-7 md:p-12 glass rounded-[32px] md:rounded-[60px] space-y-8">
               <h3 className="text-3xl font-serif">Connect with me</h3>
               <div className="grid grid-cols-1 gap-4">
                 <SocialLink 

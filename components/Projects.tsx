@@ -208,12 +208,12 @@ export default function Projects() {
             <motion.h2
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
-              className="text-5xl md:text-7xl font-serif font-light tracking-tight text-white"
+              className="text-4xl md:text-7xl font-serif font-light tracking-tight text-white"
             >
               What I&apos;m building<span className="text-[#F27D26]">.</span>
             </motion.h2>
           </div>
-          <p className="text-[#A19E95] text-lg max-w-md font-light leading-relaxed">
+          <p className="text-[#A19E95] text-base md:text-lg max-w-md font-light leading-relaxed">
             Everything I&apos;m building — status pulled live from GitHub and Hugging Face.
           </p>
         </div>
@@ -226,14 +226,14 @@ export default function Projects() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: i * 0.1, duration: 0.8 }}
-              className="group p-7 md:p-10 glass rounded-[36px] md:rounded-[48px] border border-white/5 hover:border-[#F27D26]/20 transition-all duration-700 space-y-5 md:space-y-6"
+              className="group p-7 md:p-10 glass rounded-[32px] md:rounded-[48px] border border-white/5 hover:border-[#F27D26]/20 transition-all duration-700 space-y-5 md:space-y-6"
             >
               <div className="flex justify-between items-center">
                 <StatusChip status={p.status} note={p.statusNote} />
                 <span className="text-[10px] font-mono uppercase tracking-[0.3em] text-white/30">Flagship</span>
               </div>
-              <h3 className="text-4xl font-serif font-bold text-white group-hover:text-[#F27D26] transition-colors duration-500">{p.name}</h3>
-              <p className="text-[#A19E95] font-light leading-relaxed text-lg">{p.tagline}</p>
+              <h3 className="text-3xl md:text-4xl font-serif font-bold text-white group-hover:text-[#F27D26] transition-colors duration-500">{p.name}</h3>
+              <p className="text-[#A19E95] font-light leading-relaxed text-base md:text-lg">{p.tagline}</p>
               {p.metric && (
                 <div className="font-mono text-xl text-white">
                   {p.metric} <span className="text-xs uppercase tracking-widest text-white/30">{p.metricLabel}</span>

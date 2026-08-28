@@ -28,7 +28,7 @@ export default function Hero() {
       <div className="max-w-6xl mx-auto w-full text-center z-10 space-y-16 md:space-y-24">
         <motion.div
           style={{ scale, opacity }}
-          className="space-y-8 max-w-3xl mx-auto"
+          className="space-y-6 md:space-y-8 max-w-3xl mx-auto"
         >
           <div className="space-y-4">
             <motion.span
@@ -43,7 +43,7 @@ export default function Hero() {
               initial={{ y: 24 }}
               animate={{ y: 0 }}
               transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
-              className="text-6xl md:text-8xl font-serif font-light leading-[1.1] tracking-tight text-white"
+              className="text-4xl md:text-8xl font-serif font-light leading-[1.1] tracking-tight text-white"
             >
               Arif <span className="text-gradient">Adito.</span>
             </motion.h1>

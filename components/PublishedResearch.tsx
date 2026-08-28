@@ -30,7 +30,7 @@ export default function PublishedResearch() {
           >
             Written here, not gatekept<span className="text-[#F27D26]">.</span>
           </motion.h2>
-          <p className="text-[#A19E95] text-lg font-light leading-relaxed">
+          <p className="text-[#A19E95] text-base md:text-lg font-light leading-relaxed">
             Long-form research published directly, with every source listed and every unverified claim marked as
             such. No preprint queue, no paywall.
           </p>
@@ -61,7 +61,7 @@ export default function PublishedResearch() {
                       {post.title}
                     </h3>
 
-                    <p className="text-[#A19E95] font-light leading-relaxed">{post.summary}</p>
+                    <p className="text-[#A19E95] font-light leading-relaxed text-sm md:text-base line-clamp-4 md:line-clamp-none">{post.summary}</p>
 
                     <div className="flex flex-wrap gap-2 pt-1">
                       {post.tags.map(t => (

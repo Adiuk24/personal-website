@@ -107,11 +107,11 @@ export default function Experience() {
             <span className="text-sm uppercase tracking-[0.4em] text-[#A19E95] font-medium">
               Track Record
             </span>
-            <h2 className="text-5xl md:text-7xl font-serif font-light leading-tight tracking-tight text-white">
+            <h2 className="text-4xl md:text-7xl font-serif font-light leading-tight tracking-tight text-white">
               15+ years of strategic impact<span className="text-[#A19E95]">.</span>
             </h2>
           </div>
-          <p className="text-[#A19E95] text-lg max-w-md font-light">
+          <p className="text-[#A19E95] text-base md:text-lg max-w-md font-light">
             A track record of scaling businesses from zero to market leaders across diverse industries.
           </p>
         </div>
