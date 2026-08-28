@@ -2,7 +2,7 @@
 
 import { motion } from 'motion/react';
 import { useState } from 'react';
-import { Award, CheckCircle2, ChevronDown } from 'lucide-react';
+import { Award, ChevronDown } from 'lucide-react';
 
 // Synced from LinkedIn (linkedin.com/in/arif-adito-025088b4) — Aug 2026.
 // Google PM specialization course certificates are folded into the specialization entry.
@@ -153,7 +153,7 @@ export default function Certifications() {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 md:gap-6">
           {featured.map((cert, i) => (
             <motion.div
               key={cert.title}
@@ -161,26 +161,29 @@ export default function Certifications() {
               whileInView={{ opacity: 1, scale: 1 }}
               viewport={{ once: true }}
               transition={{ delay: i * 0.05 }}
-              className={`relative p-8 glass rounded-[32px] border transition-all duration-500 group ${cert.isNew ? 'border-[#F27D26]/40 hover:border-[#F27D26]/70' : 'border-white/5 hover:border-[#F27D26]/30'}`}
+              className={`relative p-4 md:p-6 glass rounded-2xl border transition-all duration-500 group ${cert.isNew ? 'border-[#F27D26]/40 hover:border-[#F27D26]/70' : 'border-white/5 hover:border-[#F27D26]/30'}`}
             >
-              {cert.isNew && (
-                <span className="absolute -top-3 left-8 bg-[#F27D26] text-black text-[9px] font-mono font-bold uppercase tracking-widest px-3 py-1 rounded-full">
-                  New · Aug 2026
-                </span>
-              )}
-              <div className="flex items-start justify-between mb-6">
-                <div className="w-12 h-12 rounded-2xl bg-[#F27D26]/10 flex items-center justify-center group-hover:bg-[#F27D26] transition-all duration-500">
-                  <Award className="text-[#F27D26] group-hover:text-white" size={24} />
+              {/* A 48px icon tile per certificate turned a list into full-screen
+                  cards. The award mark is now a 14px inline glyph. */}
+              <div className="flex items-start gap-3">
+                <Award size={14} className="text-[#F27D26] mt-1 shrink-0" />
+                <div className="min-w-0 flex-1 space-y-1">
+                  <div className="flex items-baseline justify-between gap-3">
+                    <h3 className="text-sm md:text-base font-serif text-white group-hover:text-[#F27D26] transition-colors leading-snug">
+                      {cert.title}
+                    </h3>
+                    <span className="text-[9px] font-mono text-white/30 uppercase tracking-widest whitespace-nowrap shrink-0">
+                      {cert.date}
+                    </span>
+                  </div>
+                  <p className="text-xs text-[#A19E95] font-light">{cert.issuer}</p>
+                  {cert.note && <p className="text-[11px] text-white/25 font-light leading-snug">{cert.note}</p>}
+                  {cert.isNew && (
+                    <span className="inline-block mt-1 text-[8px] font-mono font-bold uppercase tracking-widest text-[#F27D26] border border-[#F27D26]/40 px-2 py-0.5 rounded-full">
+                      New
+                    </span>
+                  )}
                 </div>
-                <span className="text-[10px] font-bold text-[#A19E95] uppercase tracking-widest">{cert.date}</span>
-              </div>
-              <div className="space-y-2">
-                <h3 className="text-lg font-serif font-bold text-white group-hover:text-[#F27D26] transition-colors leading-snug">{cert.title}</h3>
-                <div className="flex items-center gap-2 text-[#A19E95]">
-                  <CheckCircle2 size={14} className="text-[#F27D26]" />
-                  <p className="text-sm font-light">{cert.issuer}</p>
-                </div>
-                {cert.note && <p className="text-xs text-white/30 font-light">{cert.note}</p>}
               </div>
             </motion.div>
           ))}
