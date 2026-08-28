@@ -1,3 +1,5 @@
+import { getStore } from '@netlify/blobs';
+
 // Server-side chat proxy — the Groq key never reaches the browser.
 const ALLOWED_ORIGINS = ['https://arifadito.com', 'https://www.arifadito.com', 'http://localhost:3000'];
 
@@ -24,7 +26,7 @@ export default async (req) => {
     'Access-Control-Allow-Methods': 'POST, OPTIONS',
     'Access-Control-Allow-Headers': 'Content-Type',
   };
-  if (req.method === 'OPTIONS') return new Response(null, { status: 204, headers: cors });
+  if (req.method === 'OPTIONS') return new Response('', { status: 204, headers: cors });
   if (req.method !== 'POST') return new Response('Method not allowed', { status: 405, headers: cors });
 
   let body;
@@ -51,7 +53,25 @@ export default async (req) => {
 
   if (!r.ok) return json({ error: `upstream ${r.status}` }, 502, cors);
   const data = await r.json();
-  return json({ reply: data.choices?.[0]?.message?.content || '' }, 200, cors);
+  const reply = data.choices?.[0]?.message?.content || '';
+
+  // Keep the transcript so Arif can see what visitors actually ask. Stored under
+  // a caller-supplied conversation id so a session overwrites rather than
+  // appending a new record per turn. No IP, no cookie, no visitor identity.
+  try {
+    const id = String(body.conversationId || '').replace(/[^a-zA-Z0-9_-]/g, '').slice(0, 40);
+    if (id) {
+      const store = getStore('chats');
+      await store.setJSON(`${new Date().toISOString().slice(0, 10)}_${id}`, {
+        updated: new Date().toISOString(),
+        turns: [...history, { role: 'assistant', content: reply }],
+      });
+    }
+  } catch (e) {
+    console.error('chat log failed', e); // never break the reply over logging
+  }
+
+  return json({ reply }, 200, cors);
 };
 
 function json(obj, status, cors) {

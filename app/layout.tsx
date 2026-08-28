@@ -1,3 +1,4 @@
+import { Suspense } from 'react';
 import type {Metadata} from 'next';
 import { Inter, Cormorant_Garamond } from 'next/font/google';
 import './globals.css';
@@ -31,6 +32,7 @@ export const metadata: Metadata = {
       'max-video-preview': -1,
     },
   },
+  metadataBase: new URL('https://arifadito.com'),
   alternates: {
     canonical: 'https://arifadito.com',
   },
@@ -41,25 +43,18 @@ export const metadata: Metadata = {
     title: 'Arif Adito | Business Growth Leader - SaaS, OTT & Fintech Expert',
     description: 'Strategic leader with 15+ years of experience scaling SaaS, OTT, and Fintech ventures globally.',
     siteName: 'Arif Adito',
-    images: [
-      {
-        url: 'https://arifadito.com/og-image.png',
-        width: 1200,
-        height: 630,
-        alt: 'Arif Adito - Business Growth Leader',
-      },
-    ],
   },
   twitter: {
     card: 'summary_large_image',
     title: 'Arif Adito | Business Growth Leader',
     description: 'Strategic leader scaling SaaS, OTT, and Fintech ventures globally.',
-    images: ['https://arifadito.com/og-image.png'],
   },
   verification: {
     google: 'Q1U0UL_ObRfoFeSKvShOv8sGXVpYv2bu_4_BtVM_6AU',
   },
 };
+
+import Analytics from '@/components/Analytics';
 
 export default function RootLayout({children}: {children: React.ReactNode}) {
   return (
@@ -71,6 +66,7 @@ export default function RootLayout({children}: {children: React.ReactNode}) {
       </head>
       <body className="bg-[#050505] text-[#F5F2ED] antialiased selection:bg-[#F27D26] selection:text-white" suppressHydrationWarning>
         {children}
+        <Suspense fallback={null}><Analytics /></Suspense>
       </body>
     </html>
   );

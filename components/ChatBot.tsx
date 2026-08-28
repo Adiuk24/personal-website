@@ -21,6 +21,7 @@ export default function ChatBot() {
   const [showBooking, setShowBooking] = useState(false);
   const [showNudge, setShowNudge] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
+  const conversationId = useRef(Math.random().toString(36).slice(2, 12));
 
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -55,7 +56,7 @@ export default function ChatBot() {
       const response = await fetch(`${API_BASE}/chat`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ messages: history }),
+        body: JSON.stringify({ messages: history, conversationId: conversationId.current }),
       });
       if (!response.ok) throw new Error(`API error: ${response.status}`);
 

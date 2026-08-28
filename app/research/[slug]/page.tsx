@@ -18,11 +18,18 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   return {
     title: `${post.title} | Arif Adito`,
     description: post.summary.slice(0, 200),
+    alternates: { canonical: `https://arifadito.com/research/${post.slug}` },
     openGraph: {
       title: post.title,
       description: post.summary.slice(0, 200),
       type: 'article',
+      url: `https://arifadito.com/research/${post.slug}`,
       publishedTime: post.date,
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: post.title,
+      description: post.summary.slice(0, 200),
     },
   };
 }

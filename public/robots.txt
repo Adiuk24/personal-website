@@ -4,3 +4,6 @@ Allow: /
 
 # Sitemap location
 Sitemap: https://arifadito.com/sitemap.xml
+
+# Admin view is token-gated, but keep it out of search results entirely.
+Disallow: /admin
