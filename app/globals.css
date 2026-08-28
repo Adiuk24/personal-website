@@ -33,3 +33,54 @@
   background: rgba(0, 0, 0, 0.8);
   backdrop-filter: saturate(180%) blur(20px);
 }
+
+/* Self-published research posts: long-form prose + numbered citations. */
+.research-post {
+  color: #C9C6BE;
+}
+.research-post h1 { display: none; } /* page header already renders the title */
+.research-post h2 {
+  font-family: var(--font-cormorant), serif;
+  font-weight: 300;
+  font-size: 2rem;
+  color: #fff;
+  margin-top: 3rem;
+  margin-bottom: 1rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+}
+.research-post h3 {
+  font-family: var(--font-cormorant), serif;
+  font-weight: 400;
+  font-size: 1.4rem;
+  color: #fff;
+  margin-top: 2.25rem;
+  margin-bottom: 0.75rem;
+}
+.research-post p { line-height: 1.85; margin: 1.15rem 0; font-weight: 300; }
+.research-post strong { color: #fff; font-weight: 500; }
+.research-post a { color: #F27D26; text-decoration: none; border-bottom: 1px solid rgba(242,125,38,0.3); }
+.research-post a:hover { border-bottom-color: #F27D26; }
+.research-post ul, .research-post ol { margin: 1.15rem 0; padding-left: 1.4rem; }
+.research-post li { margin: 0.5rem 0; line-height: 1.75; font-weight: 300; }
+.research-post blockquote {
+  border-left: 2px solid #F27D26;
+  padding: 0.5rem 0 0.5rem 1.5rem;
+  margin: 1.75rem 0;
+  color: #E4E3E0;
+  background: rgba(242,125,38,0.04);
+}
+.research-post table { width: 100%; border-collapse: collapse; margin: 1.75rem 0; font-size: 0.9rem; display: block; overflow-x: auto; }
+.research-post th, .research-post td { border: 1px solid rgba(255,255,255,0.1); padding: 0.6rem 0.9rem; text-align: left; }
+.research-post th { background: rgba(255,255,255,0.04); color: #fff; font-weight: 500; }
+.research-post code { background: rgba(255,255,255,0.06); padding: 0.15rem 0.4rem; border-radius: 4px; font-size: 0.875em; color: #F5F2ED; }
+.research-post pre { background: rgba(0,0,0,0.5); border: 1px solid rgba(255,255,255,0.08); border-radius: 12px; padding: 1.25rem; overflow-x: auto; }
+.research-post pre code { background: none; padding: 0; }
+
+.research-post sup.cite a { color: #F27D26; border: none; font-size: 0.7em; padding: 0 0.1em; }
+.research-post sup.cite-missing { color: #A19E95; font-size: 0.7em; cursor: help; }
+.research-post ol.references { counter-reset: none; font-size: 0.875rem; }
+.research-post ol.references li { margin: 0.6rem 0; color: #A19E95; scroll-margin-top: 6rem; }
+.research-post .ref-host { color: rgba(255,255,255,0.3); font-family: var(--font-inter), monospace; font-size: 0.75em; margin-left: 0.4rem; }
+.research-post .ref-back { border: none; margin-left: 0.35rem; opacity: 0.5; }
+.research-post [id^="cite-"] { scroll-margin-top: 6rem; }

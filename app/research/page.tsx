@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import ResearchPage from '@/components/Research';
+import PublishedResearch from '@/components/PublishedResearch';
 import Navbar from '@/components/Navbar';
 import ChatBot from '@/components/ChatBot';
 
@@ -13,6 +14,7 @@ export default function Page() {
   return (
     <main className="relative overflow-x-hidden bg-black">
       <Navbar />
+      <PublishedResearch />
       <ResearchPage />
       <ChatBot />
     </main>
