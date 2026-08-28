@@ -9,10 +9,10 @@ export default function PublishedResearch() {
   if (!RESEARCH_POSTS.length) return null;
 
   return (
-    <section id="published" className="py-32 px-6 bg-black relative overflow-hidden">
+    <section id="published" className="py-20 md:py-32 px-6 bg-black relative overflow-hidden">
       <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-white/10 to-transparent" />
 
-      <div className="max-w-5xl mx-auto space-y-16">
+      <div className="max-w-5xl mx-auto space-y-10 md:space-y-16">
         <div className="space-y-6 max-w-2xl">
           <motion.span
             initial={{ opacity: 0 }}
@@ -47,7 +47,7 @@ export default function PublishedResearch() {
             >
               <Link
                 href={`/research/${post.slug}`}
-                className="group block p-8 md:p-10 glass rounded-[32px] border border-white/5 hover:border-[#F27D26]/25 transition-all duration-500"
+                className="group block p-6 md:p-10 glass rounded-[32px] border border-white/5 hover:border-[#F27D26]/25 transition-all duration-500"
               >
                 <div className="flex items-start justify-between gap-6">
                   <div className="space-y-4 min-w-0">

@@ -26,8 +26,8 @@ const news = [
 
 export default function News() {
   return (
-    <section id="news" className="py-32 px-6 bg-[#0A0A0A]">
-      <div className="max-w-7xl mx-auto space-y-24">
+    <section id="news" className="py-20 md:py-32 px-6 bg-[#0A0A0A]">
+      <div className="max-w-7xl mx-auto space-y-12 md:space-y-24">
         <div className="flex flex-col md:flex-row justify-between items-end gap-8">
           <div className="space-y-6 max-w-2xl">
             <span className="text-sm uppercase tracking-[0.4em] text-[#F27D26] font-medium">
@@ -50,7 +50,7 @@ export default function News() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: i * 0.1, duration: 0.6 }}
-              className="p-10 glass rounded-[40px] space-y-8 flex flex-col justify-between hover:border-white/20 transition-all group"
+              className="p-7 md:p-10 glass rounded-[40px] space-y-8 flex flex-col justify-between hover:border-white/20 transition-all group"
             >
               <div className="space-y-6">
                 <div className="flex justify-between items-start">

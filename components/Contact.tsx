@@ -6,7 +6,7 @@ import BookingForm from './BookingForm';
 
 export default function Contact() {
   return (
-    <section id="contact" className="py-32 px-6 bg-[#050505] relative overflow-hidden">
+    <section id="contact" className="py-20 md:py-32 px-6 bg-[#050505] relative overflow-hidden">
       {/* Background Accents */}
       <div className="absolute bottom-0 right-0 w-[600px] h-[600px] bg-[#F27D26]/5 rounded-full blur-[120px] -z-10" />
       
@@ -42,7 +42,7 @@ export default function Contact() {
           </div>
 
           <div className="space-y-12">
-            <div id="book" className="p-12 glass rounded-[60px] space-y-6">
+            <div id="book" className="p-7 md:p-12 glass rounded-[60px] space-y-6">
               <div className="space-y-2">
                 <h3 className="text-3xl font-serif">Book a call</h3>
                 <p className="text-[#A19E95] text-sm font-light">
@@ -52,7 +52,7 @@ export default function Contact() {
               <BookingForm />
             </div>
 
-            <div className="p-12 glass rounded-[60px] space-y-8">
+            <div className="p-7 md:p-12 glass rounded-[60px] space-y-8">
               <h3 className="text-3xl font-serif">Connect with me</h3>
               <div className="grid grid-cols-1 gap-4">
                 <SocialLink 

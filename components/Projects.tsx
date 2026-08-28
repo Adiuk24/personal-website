@@ -169,7 +169,7 @@ function activityLine(p: Project, activity: Activity | null): string | null {
 function StatusChip({ status, note }: { status: Status; note?: string }) {
   const s = STATUS_STYLE[status];
   return (
-    <span className={`text-[10px] uppercase tracking-[0.2em] font-mono ${s.color} border ${s.border} px-3 py-1.5 rounded-full`}>
+    <span className={`inline-flex items-center w-fit text-[10px] uppercase tracking-[0.2em] font-mono ${s.color} border ${s.border} px-3 py-1.5 rounded-full`}>
       ● {s.label}{note ? ` · ${note}` : ''}
     </span>
   );
@@ -191,11 +191,11 @@ export default function Projects() {
   const rest = PROJECTS.filter(p => !p.flagship);
 
   return (
-    <section id="projects" className="py-32 px-6 bg-[#050505] relative overflow-hidden">
+    <section id="projects" className="py-20 md:py-32 px-6 bg-[#050505] relative overflow-hidden">
       <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-white/10 to-transparent" />
       <div className="absolute top-1/3 right-0 w-[500px] h-[500px] bg-[#F27D26]/5 rounded-full blur-[140px] -z-10" />
 
-      <div className="max-w-7xl mx-auto space-y-16">
+      <div className="max-w-7xl mx-auto space-y-10 md:space-y-16">
         <div className="flex flex-col md:flex-row justify-between items-end gap-8">
           <div className="space-y-6 max-w-2xl">
             <motion.span

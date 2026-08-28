@@ -24,10 +24,10 @@ const ventures = [
 
 export default function Innovation() {
   return (
-    <section id="ventures" className="py-32 px-6 bg-black relative overflow-hidden">
+    <section id="ventures" className="py-20 md:py-32 px-6 bg-black relative overflow-hidden">
       <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-white/10 to-transparent" />
       
-      <div className="max-w-7xl mx-auto space-y-24">
+      <div className="max-w-7xl mx-auto space-y-12 md:space-y-24">
         <div className="flex flex-col md:flex-row justify-between items-end gap-8">
           <div className="space-y-6 max-w-2xl">
             <motion.span 
@@ -50,7 +50,7 @@ export default function Innovation() {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-10">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 md:gap-10">
           {ventures.map((venture, i) => (
             <motion.div
               key={venture.title}
@@ -59,7 +59,7 @@ export default function Innovation() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: i * 0.1, duration: 0.8 }}
-              className="group relative p-10 glass rounded-[48px] border border-white/5 hover:border-[#F27D26]/20 transition-all duration-700 flex flex-col justify-between min-h-[500px]"
+              className="group relative p-7 md:p-10 glass rounded-[48px] border border-white/5 hover:border-[#F27D26]/20 transition-all duration-700 flex flex-col justify-between md:min-h-[500px]"
             >
               <div className="space-y-8">
                 <div className="flex justify-between items-start">

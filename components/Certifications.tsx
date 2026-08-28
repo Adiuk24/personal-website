@@ -123,8 +123,8 @@ function CertGroup({ group }: { group: { label: string; certs: { title: string; 
 
 export default function Certifications() {
   return (
-    <section id="certifications" className="py-32 px-6 bg-black">
-      <div className="max-w-7xl mx-auto space-y-24">
+    <section id="certifications" className="py-20 md:py-32 px-6 bg-black">
+      <div className="max-w-7xl mx-auto space-y-12 md:space-y-24">
         <div className="text-center space-y-6 max-w-3xl mx-auto">
           <motion.span
             initial={{ opacity: 0 }}

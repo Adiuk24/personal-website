@@ -100,8 +100,8 @@ function ExperienceCard({ exp, index }: { exp: Experience; index: number }) {
 
 export default function Experience() {
   return (
-    <section id="experience" className="py-32 px-6 bg-black">
-      <div className="max-w-5xl mx-auto space-y-24">
+    <section id="experience" className="py-20 md:py-32 px-6 bg-black">
+      <div className="max-w-5xl mx-auto space-y-12 md:space-y-24">
         <div className="flex flex-col md:flex-row justify-between items-end gap-8">
           <div className="space-y-6 max-w-2xl">
             <span className="text-sm uppercase tracking-[0.4em] text-[#A19E95] font-medium">
