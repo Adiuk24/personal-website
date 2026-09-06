@@ -19,6 +19,22 @@ export type ResearchPost = {
 
 export const RESEARCH_POSTS: ResearchPost[] = [
   {
+    slug: 'cpu-frontier-ai',
+    title: 'What Can Run Frontier-Competitive AI on a Low-Power CPU?',
+    subtitle:
+      'Eleven paradigms claim it. Held to one evidence bar — named hardware, named task, joules per token — three survive.',
+    date: '2026-09-06',
+    displayDate: 'September 2026',
+    words: 5588,
+    citations: 62,
+    tags: ['Edge AI', 'Model Efficiency', 'Benchmarking', 'Survey'],
+    summary:
+      'Eleven non-mainstream paradigms are surveyed against a single admissibility rule: a measurement counts only if it names the hardware, names the task, and reports energy rather than latency. Three carry admissible CPU evidence — Tsetlin Machines, retrieval-dominant tiny models, and HDC/VSA via the Nyström kernel bridge. The other eight fail as hardware-conditional, rebranded, or simply unmeasured. The field-wide finding is an energy blind spot that hits the winners as hard as the traps.',
+    unresolvedCitations: [
+      '250900454-universal-properties-of-activation-sparsity-in-modern-large-language-models',
+    ],
+  },
+  {
     slug: 'ai-privacy-gateway',
     title: 'Privacy Gateways and PII-Redaction Layers for AI Coding Agents',
     subtitle:

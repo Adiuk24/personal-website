@@ -104,9 +104,12 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
             </p>
             <p className="text-sm text-[#A19E95] font-light leading-relaxed">
               {post.citations} of {post.citations + post.unresolvedCitations.length} citations resolve to a public
-              URL and are listed in the references. {post.unresolvedCitations.length} claims cite primary regulatory
-              documents whose public link could not be verified at publication and are marked{' '}
-              <sup className="text-[#F27D26]">[?]</sup> in the text rather than given a source that was not checked.
+              URL and are listed in the references.{' '}
+              {post.unresolvedCitations.length === 1
+                ? 'One claim cites a primary source whose public link could not be verified at publication and is'
+                : `${post.unresolvedCitations.length} claims cite primary sources whose public links could not be verified at publication and are`}{' '}
+              marked <sup className="text-[#F27D26]">[?]</sup> in the text rather than given a source that was not
+              checked.
             </p>
           </aside>
         ) : null}
