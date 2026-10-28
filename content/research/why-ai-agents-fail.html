@@ -1,0 +1,93 @@
+<h1 id="why-long-running-ai-agents-fail-cluttered-context-or-compounding-mistakes">Why Long-Running AI Agents Fail: Cluttered Context or Compounding Mistakes?</h1>
+<p>AI agents look capable one step at a time and then fall apart on long jobs. There are two popular explanations. The first is that the model's context fills up with clutter until it stops seeing what matters. The second is that small mistakes compound, so each wrong step makes the next one likelier.</p>
+<p>They call for different fixes. If clutter is the cause, you invest in context hygiene. If compounding is the cause, you invest in checking every step. So we read the research and ran a small test on our own pipeline to see which story holds up.</p>
+<p>The short answer is that the research measures clutter far better than compounding, and our own data hints that both are at work at different stages of a run. That isn't conclusive. Below is what the evidence shows, what it doesn't, and what we now do differently.</p>
+<h2 id="1-the-puzzle">1. The puzzle</h2>
+<p>Suppose each step of an agent's task succeeds 95% of the time. If steps were independent, a 50-step task would succeed only 0.95⁵⁰ ≈ 8% of the time. Real agents sometimes do far better than that arithmetic, and sometimes far worse. That alone tells you steps aren't independent: something links them.</p>
+<p>The two candidate links:</p>
+<ul>
+<li><strong>Context degradation.</strong> As a run goes on, the model's context window fills with tool outputs, earlier attempts and half-relevant notes. The model gets worse at finding the one detail it needs. The failure rate should rise the longer a single session runs.</li>
+<li><strong>Error compounding.</strong> A wrong step puts the agent in a situation it handles badly, which makes the next step likelier to go wrong. The failure rate depends on how far the agent has drifted, not on how long the context is.</li>
+</ul>
+<p>The catch is that a long task is also a long context. In almost every published benchmark, the two rise together, so end-to-end success rates can't tell them apart.</p>
+<h2 id="2-what-the-research-measures-well-cluttered-context">2. What the research measures well: cluttered context</h2>
+<p>Context degradation is well measured, across many models and test designs.</p>
+<p><strong>Information in the middle gets lost.</strong> The paper that named the effect tested multi-document question answering with the answer placed at different positions. Accuracy was highest when the answer sat at the start or end of the context, and lowest in the middle. For GPT-3.5-Turbo with 20 documents, the worst middle position scored 53.8%, below its 56.1% score with no documents at all (<a href="https://arxiv.org/abs/2307.03172">Liu et al., TACL 2024</a>). Models with longer context windows were often no better.</p>
+<p><strong>The effect is still large in some 2026 models.</strong> A study of positional failures found MiMo-v2-Flash dropping 88 percentage points at 64K tokens when the target moved from the end to the middle. In its initial five-model set, 76% of middle-position errors repeated nearby filler text, against 22% at the end (<a href="https://arxiv.org/abs/2605.23170">Zhang et al., 2026</a>). Newer releases in the same study dropped much less (MiMo-V2.5-Pro: 32 points), so this is improving, unevenly.</p>
+<p><strong>How facts are spread matters, and so does how the model is told to behave.</strong> Testing Gemini-2.5-flash, ChatGPT-5-mini, Claude-4.5-haiku and DeepSeek-v3.2-chat, one study found two failure modes. "Distributional collapse": performance falls when evidence is clustered or scattered in particular ways. "Safety tax": anti-hallucination instructions make models refuse to report facts that are actually there. For ChatGPT-5-mini, extraction fell to 0% when facts were centrally clustered and the anti-hallucination prompt was on (<a href="https://arxiv.org/abs/2601.02023">Ebrahimzadeh &amp; Salili, FAGEN Workshop at ICML 2026</a>).</p>
+<p><strong>Dilution, not just length.</strong> Across 15 safety guardrails, LongGuard found that recall of unsafe content falls by more than 50% on average as inputs grow from 0.25K to 32K tokens (<a href="https://arxiv.org/abs/2608.27580">Chen et al., 2026</a>). Its paired design separates the two causes. When the harmful passage is diluted by benign filler, recall falls from 76.0% to 25.1%. When it is repeated so its share stays constant, recall falls only from 85.4% to 67.5%. By that arithmetic, roughly two-thirds of the loss comes from the signal being diluted, not from length itself. The authors' own conclusion is that dilution is the dominant cause.</p>
+<p><strong>Near-miss distractors are the hard case.</strong> A 2026 evaluation separated finding the evidence from using it. Retrieval that looks perfect on easy "needle in a haystack" tests degrades sharply when the haystack contains near-miss passages. For a strong dense retriever, top-10 success fell from 0.93 on a 64K-token corpus to 0.68 on a 326M-token corpus. Answer quality from native long-context models also declined between 64K and 1M tokens (<a href="https://arxiv.org/abs/2601.20276">Lin et al., 2026</a>).</p>
+<p><strong>Training choices can make it worse.</strong> Fine-tuning hybrid linear-attention models for step-by-step reasoning damaged their long-range recall. One 9B model's score on a 256K-token retrieval test fell from 67.2% to 9.4% (<a href="https://arxiv.org/abs/2606.11052">Zhou et al., EMNLP 2026</a>).</p>
+<p><strong>The counterpoint.</strong> Not every model shows this. A short study found no lost-in-the-middle effect for simple factual questions in Gemini 2.5 Flash, even at its context limit (<a href="https://arxiv.org/abs/2511.05850">McKinnon, 2025</a>). It tested one model on one kind of question, but it is a reminder that the size of the effect depends on the model and the task.</p>
+<h2 id="3-what-the-research-barely-measures-compounding-mistakes">3. What the research barely measures: compounding mistakes</h2>
+<p>Error compounding has strong theory behind it. In imitation learning, a policy that copies an expert can drift into situations the expert never showed it, and its mistakes can grow roughly with the square of the task length. Methods like DAgger, which collect corrections on the states the learner actually visits, bring that down to roughly linear (<a href="https://arxiv.org/abs/1011.0686">Ross, Gordon &amp; Bagnell, AISTATS 2011</a>).</p>
+<p>What we could not find is a study that measures this directly in LLM agents: one that logs which step failed, why, and whether earlier failures caused it. Every context-degradation paper above measured something. On the compounding side, we found theory and analogy, not measurement.</p>
+<p>That imbalance is easy to misread. It doesn't mean clutter causes more failures. It means the field has looked for clutter, because it's easier to test. <strong>Absence of measurement is not evidence of absence.</strong></p>
+<h2 id="4-our-pilot-one-pipeline-sixteen-runs">4. Our pilot: one pipeline, sixteen runs</h2>
+<p>We run a 16-step research pipeline (the one that produced this report). We audited 16 of its runs: 146 recorded steps in all.</p>
+<p><strong>What the logs could and couldn't tell us:</strong></p>
+<ul>
+<li><strong>No step was ever marked as failed.</strong> The logs record steps as done, skipped, running or pending. 96.6% were done. The few skips came from one run, where a missing file at step 12 cascaded into steps 13 and 14.</li>
+<li><strong>Runs did stall, though.</strong> Several stopped part-way. We treated the last unfinished step as the point where each run "failed" and computed a failure rate per step from that. This is an inference, and a stall can have causes that have nothing to do with the model, such as a blocked website or a missing key.</li>
+<li><strong>We hadn't recorded the session setup.</strong> Some runs used a fresh model session for each step, and others ran in one long session. That wasn't logged, so we inferred it from event patterns afterwards.</li>
+</ul>
+<p><strong>What the inferred numbers show:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Part of the run</th>
+<th>Steps</th>
+<th>Inferred failure rate per step</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Early</td>
+<td>1–4</td>
+<td>12.5–25% (setup problems, blocked fetches)</td>
+</tr>
+<tr>
+<td>Middle</td>
+<td>4–11</td>
+<td>about 0%</td>
+</tr>
+<tr>
+<td>Late</td>
+<td>12–13</td>
+<td>14–17%</td>
+</tr>
+</tbody>
+</table>
+<p>That U-shape fits neither pure story. Pure compounding predicts a roughly flat rate. Pure context degradation predicts a rate that climbs from the start. The early failures look like setup problems. The late rise is where clutter would show up.</p>
+<p>The session comparison points the same way. The one run that used a fresh session per step finished all 16 steps without stalling. The seven single-session runs showed an inferred failure rate climbing from 14% at step 2 to 25% at step 13.</p>
+<p><strong>Now the honest part.</strong> One fresh-session run proves very little: its true failure rate could still be as high as about 18% per step. Our test had roughly a 15% chance of detecting a real difference of this size. Settling it would take about 30 runs of each kind, with the session setup and every failure recorded as it happens. Read this as a pilot that shows a direction, not a result.</p>
+<h2 id="5-what-we-do-differently-now">5. What we do differently now</h2>
+<p>The evidence isn't strong enough to bet on one mechanism. Fortunately, the most useful fixes help in both cases.</p>
+<ol>
+<li><strong>Keep sessions short.</strong> Start a fresh session per step or per sub-task and pass forward only what the next step needs. This is the most direct defence against clutter, and it also stops one bad step from polluting everything after it.</li>
+<li><strong>Compact without throwing detail away.</strong> Summarising old context can discard the detail you later need. Addressable Recall Compaction keeps full records in an archive and shows the model a compact, addressable view. On a needle-in-a-haystack test it reached 99.40% exact answers, against 88.12% for the best baseline (<a href="https://arxiv.org/abs/2607.25066">Dang et al., 2026</a>).</li>
+<li><strong>Filter near-miss distractors, not just tokens.</strong> The research suggests that semantic look-alikes do more damage than length alone. Retrieval and filtering that remove near-duplicates can matter more than raw trimming. Context-filtering models such as FltLM take this route (<a href="https://arxiv.org/abs/2410.06886">Deng et al., 2024</a>).</li>
+<li><strong>Put what matters at the start or end.</strong> For models that still show positional bias, place instructions and key facts where they're best attended.</li>
+<li><strong>Check each step and keep checkpoints.</strong> Verification gates catch the early setup failures that context hygiene can't. Checkpoints let a long job resume instead of restarting.</li>
+</ol>
+<p>And in our own pipeline, from now on, every run records its session setup and an explicit reason for every failed step. When we have about 30 runs of each kind, we'll publish the result, whichever way it falls.</p>
+<h2 id="6-limits-of-this-piece">6. Limits of this piece</h2>
+<ul>
+<li>The pilot is small, its session labels were inferred, and its "failures" are stalls, not logged errors.</li>
+<li>Most of the context-degradation evidence comes from retrieval tests, not full agent tasks.</li>
+<li>Models are improving quickly, so some effects above are already smaller in the newest releases.</li>
+<li>We found no direct measurement of error compounding in LLM agents. If you know of one, tell us at info@adioris.com.</li>
+</ul>
+<h2 id="references">References</h2>
+<ol>
+<li>Liu, N. F. et al. <em>Lost in the Middle: How Language Models Use Long Contexts.</em> TACL, 2024. <a href="https://arxiv.org/abs/2307.03172">arXiv:2307.03172</a></li>
+<li>Zhang, C. et al. <em>Positional Failures in Long-Context LLMs: A Blind Spot in Reasoning Benchmarks.</em> 2026. <a href="https://arxiv.org/abs/2605.23170">arXiv:2605.23170</a></li>
+<li>Ebrahimzadeh, A. &amp; Salili. <em>Not All Needles Are Found: How Fact Distribution and Don't Make It Up Prompts Shape Retrieval, Reasoning, and Hallucination in Long-Context LLMs.</em> FAGEN Workshop at ICML, 2026. <a href="https://arxiv.org/abs/2601.02023">arXiv:2601.02023</a></li>
+<li>Chen, Z. et al. <em>LongGuard: Mechanistic Analysis and Training-Free Mitigation of Long-Context Failure in Safety Guardrails.</em> 2026. <a href="https://arxiv.org/abs/2608.27580">arXiv:2608.27580</a></li>
+<li>Lin, T. et al. <em>Beyond the Needle's Illusion: Decoupled Evaluation of Evidence Access and Use under Semantic Interference at 326M-Token Scale.</em> 2026. <a href="https://arxiv.org/abs/2601.20276">arXiv:2601.20276</a></li>
+<li>Zhou, X. et al. <em>Attention Amnesia in Hybrid LLMs: When CoT Fine-Tuning Breaks Long-Range Recall, and How to Fix It.</em> EMNLP, 2026. <a href="https://arxiv.org/abs/2606.11052">arXiv:2606.11052</a></li>
+<li>McKinnon, M. <em>Retrieval Quality at Context Limit.</em> 2025. <a href="https://arxiv.org/abs/2511.05850">arXiv:2511.05850</a></li>
+<li>Ross, S., Gordon, G. &amp; Bagnell, J. A. <em>A Reduction of Imitation Learning and Structured Prediction to No-Regret Online Learning.</em> AISTATS, 2011. <a href="https://arxiv.org/abs/1011.0686">arXiv:1011.0686</a></li>
+<li>Dang, T. et al. <em>Addressable Recall Compaction for Long Context-Window Control in AI Agents.</em> 2026. <a href="https://arxiv.org/abs/2607.25066">arXiv:2607.25066</a></li>
+<li>Deng, J. et al. <em>FltLM: An Intergrated Long-Context Large Language Model for Effective Context Filtering and Understanding.</em> 2024. <a href="https://arxiv.org/abs/2410.06886">arXiv:2410.06886</a></li>
+</ol>

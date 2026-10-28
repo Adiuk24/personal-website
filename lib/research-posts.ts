@@ -19,6 +19,19 @@ export type ResearchPost = {
 
 export const RESEARCH_POSTS: ResearchPost[] = [
   {
+    slug: 'why-ai-agents-fail',
+    title: 'Why Long-Running AI Agents Fail: Cluttered Context or Compounding Mistakes?',
+    subtitle:
+      'Ten papers and a small pilot on our own pipeline. The research measures clutter far better than compounding, and our data hints that both act, at different stages of a run.',
+    date: '2026-10-29',
+    displayDate: 'October 2026',
+    words: 1907,
+    citations: 10,
+    tags: ['AI Agents', 'Long Context', 'Reliability', 'Field Study'],
+    summary:
+      "AI agents fail on long jobs far more than their per-step accuracy suggests. Two explanations compete: context degradation (clutter in the model's context) and error compounding (one wrong step makes the next likelier). Context degradation is well measured across many models; compounding has strong theory but almost no direct measurement in LLM agents. A 16-run pilot on our own research pipeline shows a U-shaped failure pattern and a fresh-session run that never stalled. That points the same way, but it is underpowered and labelled as such. The piece ends with five fixes that help whichever mechanism dominates.",
+  },
+  {
     slug: 'cpu-frontier-ai',
     title: 'What Can Run Frontier-Competitive AI on a Low-Power CPU?',
     subtitle:
