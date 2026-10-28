@@ -86,7 +86,7 @@ export default function FeaturedResearch() {
                   NEW · July 27, 2026
                 </span>
                 <span className="px-3 py-1 rounded-full bg-white/10 text-[#A19E95] text-[11px] font-medium uppercase tracking-wider">
-                  DOI: 10.5281/zenodo.21621066
+                  arXiv: 2609.25008
                 </span>
               </div>
 
@@ -123,7 +123,7 @@ export default function FeaturedResearch() {
             {/* Action Buttons */}
             <div className="pt-8 flex flex-wrap items-center gap-4 relative z-10 border-t border-white/10 mt-6">
               <a
-                href="https://zenodo.org/records/21621066/files/main.pdf"
+                href="https://arxiv.org/pdf/2609.25008"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="px-5 py-2.5 rounded-full bg-white text-black hover:bg-white/90 text-xs font-bold transition-all flex items-center gap-2"
@@ -132,13 +132,22 @@ export default function FeaturedResearch() {
                 <span>Download PDF</span>
               </a>
               <a
+                href="https://arxiv.org/abs/2609.25008"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="px-5 py-2.5 rounded-full bg-white/5 hover:bg-white/10 text-white text-xs font-medium transition-all flex items-center gap-2 border border-white/10"
+              >
+                <ExternalLink size={14} />
+                <span>arXiv</span>
+              </a>
+              <a
                 href="https://doi.org/10.5281/zenodo.21621066"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="px-5 py-2.5 rounded-full bg-white/5 hover:bg-white/10 text-white text-xs font-medium transition-all flex items-center gap-2 border border-white/10"
               >
                 <ExternalLink size={14} />
-                <span>Zenodo Preprint</span>
+                <span>Zenodo</span>
               </a>
               <Link
                 href="/research?paper=rust-lm"

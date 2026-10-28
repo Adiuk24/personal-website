@@ -14,7 +14,7 @@ const ventures = [
   },
   {
     title: 'LLM & Systems Research',
-    description: 'Published research in pure Rust end-to-end LM pretraining (DOI: 10.5281/zenodo.21621066) and identity-anchored LLM architectures (arXiv: 2604.00009). Exploring frontiers in ML framework failure modes & cognitive modeling.',
+    description: 'Two arXiv papers: pure Rust end-to-end LM pretraining (arXiv: 2609.25008) and identity-anchored LLM architectures (arXiv: 2604.00009). Exploring frontiers in ML framework failure modes & cognitive modeling.',
     link: '/research',
     icon: <Brain className="text-[#F27D26]" />,
     type: 'Research',

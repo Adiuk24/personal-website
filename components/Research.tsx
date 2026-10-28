@@ -51,9 +51,11 @@ const PAPERS: Record<'rust-lm' | 'eyla', Paper> = {
     subtitle: 'Failure Taxonomy of Candle & Burn Backends, Gradient-Flow Verification, and Lessons from a $164 Pure Rust LM Pretraining Run',
     author: 'Adito, Arif — Independent Researcher',
     published: 'July 27, 2026',
+    arxivId: '2609.25008',
+    arxivUrl: 'https://arxiv.org/abs/2609.25008',
     doi: '10.5281/zenodo.21621066',
     doiUrl: 'https://doi.org/10.5281/zenodo.21621066',
-    pdfUrl: 'https://zenodo.org/records/21621066/files/main.pdf',
+    pdfUrl: 'https://arxiv.org/pdf/2609.25008',
     keywords: [
       'Pure Rust ML',
       'LM Pretraining',
@@ -69,9 +71,12 @@ const PAPERS: Record<'rust-lm' | 'eyla', Paper> = {
   year   = {2026},
   month  = {July},
   day    = {27},
+  eprint = {2609.25008},
+  archivePrefix = {arXiv},
+  primaryClass  = {cs.CL},
   doi    = {10.5281/zenodo.21621066},
-  url    = {https://doi.org/10.5281/zenodo.21621066},
-  note   = {Zenodo Preprint, Open Access}
+  url    = {https://arxiv.org/abs/2609.25008},
+  note   = {arXiv preprint; also archived on Zenodo (10.5281/zenodo.21621066)}
 }`,
   },
   eyla: {

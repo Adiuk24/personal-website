@@ -7,7 +7,7 @@ import ChatBot from '@/components/ChatBot';
 export const metadata: Metadata = {
   title: 'Research & Publications — Pure Rust LM Pretraining & Eyla Architecture | Arif Adito',
   description:
-    'Published research by Arif Adito: "Training a Language Model End-to-End in Rust: An Experience Report" (Zenodo DOI: 10.5281/zenodo.21621066) and "Eyla: Toward an Identity-Anchored LLM Architecture" (arXiv: 2604.00009).',
+    'Published research by Arif Adito: "Training a Language Model End-to-End in Rust: An Experience Report" (arXiv: 2609.25008) and "Eyla: Toward an Identity-Anchored LLM Architecture" (arXiv: 2604.00009).',
 };
 
 export default function Page() {
